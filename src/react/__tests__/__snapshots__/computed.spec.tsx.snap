@@ -1,0 +1,19 @@
+// Vitest Snapshot v1
+
+exports[`react > computed() > should compute value based on other refs 1`] = `
+<div>
+  3
+</div>
+`;
+
+exports[`react > computed() > should create a new computed value 1`] = `
+<div>
+  hello
+</div>
+`;
+
+exports[`react > computed() > should update value based on other refs 1`] = `
+<div>
+  10
+</div>
+`;

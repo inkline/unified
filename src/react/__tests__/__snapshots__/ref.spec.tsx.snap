@@ -1,0 +1,31 @@
+// Vitest Snapshot v1
+
+exports[`react > ref() > getter > should return current value 1`] = `
+<div>
+  hello
+</div>
+`;
+
+exports[`react > ref() > setter > should set a new array value 1`] = `
+<button>
+  a, b
+</button>
+`;
+
+exports[`react > ref() > setter > should set a new object value 1`] = `
+<button>
+  world
+</button>
+`;
+
+exports[`react > ref() > setter > should set a new string value 1`] = `
+<button>
+  world
+</button>
+`;
+
+exports[`react > ref() > should create a reference value 1`] = `
+<div>
+  hello
+</div>
+`;

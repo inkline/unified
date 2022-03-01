@@ -1,0 +1,21 @@
+// Vitest Snapshot v1
+
+exports[`react > defineComponent() > should render react component 1`] = `<div />`;
+
+exports[`react > defineComponent() > should render react component with state 1`] = `
+<button>
+  0
+</button>
+`;
+
+exports[`react > defineComponent() > should render react component with state and props 1`] = `
+<button>
+  1
+</button>
+`;
+
+exports[`react > defineComponent() > should render react component with state, props, and onClick 1`] = `
+<button>
+  2
+</button>
+`;

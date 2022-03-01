@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`vue > defineComponent() > should render a vue component with state 1`] = `"<div>0</div>"`;
+
+exports[`vue > defineComponent() > should render a vue component with state and props 1`] = `"<div>1</div>"`;
+
+exports[`vue > defineComponent() > should render a vue component with state, props, and onClick 1`] = `"<button>2</button>"`;
