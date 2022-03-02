@@ -17,3 +17,16 @@ export type ComponentProps<Props> = {
         default?: Props[key] | (() => Props[key]);
     };
 }
+
+export interface ComponentContext {
+    useSlot(name?: string): any;
+    emit: (...args: any[]) => void
+}
+
+export interface ComponentDefinition<Props extends Record<string, any> = {}, State extends Record<string, any> = {}, VNode = any> {
+    slots?: string[];
+    emits?: string[];
+    props?: ComponentProps<Props>;
+    setup?(props: Props, context: ComponentContext): State;
+    render(state: Props & State, context: ComponentContext): VNode;
+}

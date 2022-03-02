@@ -19,3 +19,61 @@ exports[`react > defineComponent() > should render react component with state, p
   2
 </button>
 `;
+
+exports[`react > defineComponent() > slots > should render react component with aggregated default slot and named default slot 1`] = `
+<div>
+  <span>
+    Default Slot Child 1
+  </span>
+  <span>
+    Named Default Slot Child
+  </span>
+  <span>
+    Default Slot Child 2
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > slots > should render react component with default slot, multiple children 1`] = `
+<div>
+  <span>
+    Child 1
+  </span>
+  <span>
+    Child 2
+  </span>
+  <span>
+    Child 3
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > slots > should render react component with default slot, one child 1`] = `
+<div>
+  <span>
+    Child
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > slots > should render react component with named default slot 1`] = `
+<div>
+  <span>
+    Child
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > slots > should render react component with named slots 1`] = `
+<div>
+  <span>
+    Header
+  </span>
+  <span>
+    Child
+  </span>
+  <span>
+    Footer
+  </span>
+</div>
+`;
