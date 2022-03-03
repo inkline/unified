@@ -1,6 +1,6 @@
 import { Slots, VNode } from '@inkline/ucd/react/types';
 import { ComponentDefinition, ComponentProps, RenderContext, SetupContext } from '@inkline/ucd/types';
-import {PropsWithChildren, useEffect, useRef, useState} from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { capitalizeFirst } from '@inkline/ucd/helpers';
 import { getSlotChildren, normalizeEventName } from '@inkline/ucd/react/helpers';
 
@@ -93,9 +93,11 @@ export function defineComponent<Props extends Record<string, any> = {}, State ex
             inject: (identifier, defaultValue) => {
                 const [, setState] = useState();
 
-                defaultValue = typeof defaultValue === 'function' ? (defaultValue as () => any)() : defaultValue;
-
                 if (!providers[identifier]) {
+                    defaultValue = typeof defaultValue === 'function'
+                        ? (defaultValue as () => any)()
+                        : defaultValue;
+
                     registerProvider(identifier, defaultValue);
                 }
 

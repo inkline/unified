@@ -325,7 +325,7 @@ describe('react', () => {
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
-                it.only('should provide reactive data to children', async () => {
+                it('should provide reactive data to children', async () => {
                     const identifier = Symbol('provide-reactive');
                     const Provider = defineComponent<{}, { onClick(): void }>({
                         setup (props, ctx) {
@@ -364,15 +364,13 @@ describe('react', () => {
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
-                it('should provide reactive data to children 2', async () => {
-                    const identifier = Symbol('provide-reactive');
-
-                    const Provider1 = defineComponent<{}, { onClick(): void }>({
+                it('should provide reactive data based on id', async () => {
+                    const Provider = defineComponent<{ id: string; }, { onClick(): void }>({
                         setup (props, ctx) {
-                            const count = ref(0);
-                            const onClick = () => { count.value += 1; };
+                            const text = ref(props.id);
+                            const onClick = () => { text.value = 'abc'; };
 
-                            ctx.provide(identifier, count);
+                            ctx.provide(props.id, text);
 
                             return { onClick };
                         },
@@ -383,25 +381,9 @@ describe('react', () => {
                         }
                     });
 
-                    const Provider2 = defineComponent<{}, { onClick(): void }>({
+                    const Consumer = defineComponent<{ id: string; }, { providedValue: Ref<string>; }>({
                         setup (props, ctx) {
-                            const count = ref(0);
-                            const onClick = () => { count.value += 1; };
-
-                            ctx.provide(identifier, count);
-
-                            return { onClick };
-                        },
-                        render (state, ctx) {
-                            return h('button', { onClick: state.onClick }, [
-                                ctx.slot()
-                            ]);
-                        }
-                    });
-
-                    const Consumer = defineComponent<{}, { providedValue: Ref<number>; }>({
-                        setup (props, ctx) {
-                            const providedValue = ctx.inject<Ref<number>>(identifier);
+                            const providedValue = ctx.inject<Ref<string>>(props.id);
 
                             return { providedValue };
                         },
@@ -412,16 +394,22 @@ describe('react', () => {
                         }
                     });
 
-                    const wrapper = render(<Provider1>
-                        <Consumer />
-                    </Provider1> as any);
-                    fireEvent.click(wrapper.container.firstChild as Element);
-                    expect(wrapper.findByText('1')).toBeTruthy();
+                    const wrapper = render(<div>
+                        <Provider id="a">
+                            <Consumer id="a" />
+                        </Provider>
+                        <Provider id="b">
+                            <Consumer id="b" />
+                        </Provider>
+                    </div> as any);
 
-                    const wrapper2 = render(<Provider2>
-                        <Consumer />
-                    </Provider2> as any);
-                    expect(await wrapper2.findByText('1')).not.toBeTruthy();
+                    const buttons = wrapper.container.querySelectorAll('button');
+
+                    expect(wrapper.container.firstChild).toMatchSnapshot();
+                    fireEvent.click(buttons[0] as Element);
+                    expect(wrapper.container.firstChild).toMatchSnapshot();
+                    fireEvent.click(buttons[1] as Element);
+                    expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
             });
         });

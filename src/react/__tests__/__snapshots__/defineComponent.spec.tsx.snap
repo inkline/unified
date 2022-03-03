@@ -1,9 +1,140 @@
 // Vitest Snapshot v1
 
+exports[`react > defineComponent() > context > provide/inject() > should provide data to children 1`] = `
+<div>
+  <div>
+    value
+  </div>
+</div>
+`;
+
+exports[`react > defineComponent() > context > provide/inject() > should provide reactive data based on id 1`] = `
+<div>
+  <button>
+    <div>
+      a
+    </div>
+  </button>
+  <button>
+    <div>
+      b
+    </div>
+  </button>
+</div>
+`;
+
+exports[`react > defineComponent() > context > provide/inject() > should provide reactive data based on id 2`] = `
+<div>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+  <button>
+    <div>
+      b
+    </div>
+  </button>
+</div>
+`;
+
+exports[`react > defineComponent() > context > provide/inject() > should provide reactive data based on id 3`] = `
+<div>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+</div>
+`;
+
 exports[`react > defineComponent() > context > provide/inject() > should provide reactive data to children 1`] = `
 <button>
   <div>
     1
   </div>
+</button>
+`;
+
+exports[`react > defineComponent() > context > slot() > should render react component with aggregated default slot and named default slot 1`] = `
+<div>
+  <span>
+    Default Slot Child 1
+  </span>
+  <span>
+    Named Default Slot Child
+  </span>
+  <span>
+    Default Slot Child 2
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > context > slot() > should render react component with default slot, multiple children 1`] = `
+<div>
+  <span>
+    Child 1
+  </span>
+  <span>
+    Child 2
+  </span>
+  <span>
+    Child 3
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > context > slot() > should render react component with default slot, one child 1`] = `
+<div>
+  <span>
+    Child
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > context > slot() > should render react component with named default slot 1`] = `
+<div>
+  <span>
+    Child
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > context > slot() > should render react component with named slots 1`] = `
+<div>
+  <span>
+    Header
+  </span>
+  <span>
+    Body
+  </span>
+  <span>
+    Footer
+  </span>
+</div>
+`;
+
+exports[`react > defineComponent() > should render component 1`] = `<div />`;
+
+exports[`react > defineComponent() > should render component with state 1`] = `
+<button>
+  0
+</button>
+`;
+
+exports[`react > defineComponent() > should render component with state and props 1`] = `
+<button>
+  1
+</button>
+`;
+
+exports[`react > defineComponent() > should render component with state, props, and onClick state function 1`] = `
+<button>
+  2
 </button>
 `;
