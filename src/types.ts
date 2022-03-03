@@ -18,15 +18,20 @@ export type ComponentProps<Props> = {
     };
 }
 
-export interface ComponentContext {
-    useSlot(name?: string): any;
-    emit: (...args: any[]) => void
+export interface SetupContext {
+    provide<T>(identifier: string | symbol, value: T): void;
+    inject<T>(identifier: string | symbol, defaultValue?: T | (() => T)): T;
+    emit: (eventName: string, ...args: any[]) => void
+}
+
+export interface RenderContext {
+    slot(name?: string): any;
 }
 
 export interface ComponentDefinition<Props extends Record<string, any> = {}, State extends Record<string, any> = {}, VNode = any> {
     slots?: string[];
     emits?: string[];
     props?: ComponentProps<Props>;
-    setup?(props: Props, context: ComponentContext): State;
-    render(state: Props & State, context: ComponentContext): VNode;
+    setup?(props: Props, context: SetupContext): State;
+    render(state: Props & State, context: RenderContext): VNode;
 }
