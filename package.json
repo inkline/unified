@@ -1,7 +1,7 @@
 {
   "name": "@inkline/paper",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "rimraf lib && npm run build:react && npm run build:vue",
