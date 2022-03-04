@@ -30,12 +30,20 @@
         "src/**/*.vue"
     ],
     "exclude": [
-        "src/vue",
-        "src/react"
+        "src/react",
+        "src/vue"
     ],
-    "references": [{
-        "path": "./tsconfig.vite.json"
-    }],
+    "references": [
+        {
+            "path": "./tsconfig.vite.json"
+        },
+        {
+            "path": "./src/react/tsconfig.json"
+        },
+        {
+            "path": "./src/vue/tsconfig.json"
+        }
+    ],
     "ts-node": {
         "transpileOnly": true,
         "compilerOptions": {
