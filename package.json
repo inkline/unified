@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.js",
     "test": "vitest",
-    "prerelease": "npm run test && npm run build",
+    "test:ci": "vitest run --coverage",
+    "prerelease": "npm run test:ci && npm run build",
     "release": "np",
     "postrelease": "ts-node scripts/postrelease.ts",
     "postversion": "ts-node scripts/postversion.ts"
@@ -33,6 +34,7 @@
     "eslint-plugin-promise": "6.0.0",
     "jsdom": "^19.0.0",
     "mjscjs": "1.0.9",
+    "np": "7.6.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "rimraf": "3.0.2",
