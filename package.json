@@ -10,9 +10,10 @@
     "postbuild": "ts-node scripts/postbuild.ts",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.js",
-    "test": "vitest",
+    "test": "vitest run",
     "test:ci": "vitest run --coverage",
-    "prerelease": "npm run test:ci && npm run build",
+    "test:dev": "vitest",
+    "prerelease": "npm run test && npm run build",
     "release": "np",
     "postrelease": "ts-node scripts/postrelease.ts",
     "postversion": "ts-node scripts/postversion.ts"
