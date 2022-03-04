@@ -1,7 +1,7 @@
 {
-  "name": "universal",
+  "name": "@inkline/paper",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0-beta.0",
   "scripts": {
     "dev": "vite",
     "build": "rimraf lib && vite build && npm run build:mjs && npm run build:cjs && ts-node scripts/build.ts",
