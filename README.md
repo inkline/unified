@@ -58,8 +58,10 @@ Import the common component definition interface from `@inkline/paper` and decid
 
 ## Usage
 
-### Render function
-#### `h(type: string, props: Record<string, any>, children: (VNode | string)[]): VNode`
+### Create element
+```ts
+h(type: string, props: Record<string, any>, children: (VNode | string)[]): VNode
+```
 
 The hoist function `h()` is used to create elements.
 
@@ -73,8 +75,12 @@ const children = ['Hello world'];
 const node = h(type, props, children);
 ~~~
 
+--------
+
 ### Define component
-#### `defineComponent<Props, State>(definition: ComponentDefinition<Props, State>)`
+```ts
+defineComponent<Props, State>(definition: ComponentDefinition<Props, State>)
+```
 
 The `defineComponent()` function is used to set up framework-specific internals and get type annotations. 
 
@@ -98,8 +104,12 @@ const Component = defineComponent({
 <Component />
 ~~~
 
-### Component render function
-#### `defineComponent({ render(state: Props & State, ctx: RenderContext): VNode })`
+--------
+
+### Render function
+```ts
+defineComponent({ render(state: Props & State, ctx: RenderContext): VNode })
+```
 
 The `render()` function is mandatory and is used to return the component markup using hoisting. 
 
@@ -125,8 +135,12 @@ const Component = defineComponent({
 <Component />
 ~~~
 
-### Component setup function
-#### `defineComponent({ setup(props: Props, ctx: SetupContext) })`
+--------
+
+### Setup function
+```ts
+defineComponent({ setup(props: Props, ctx: SetupContext) })
+```
 
 The `setup()` function is used to prepare functions.
 
@@ -157,8 +171,12 @@ const Component = defineComponent<{}, { text: string }>({
 <Component />
 ~~~
 
-#### Reference variables
-##### `ref<Type>(defaultValue: Type)`
+--------
+
+### Reference variables
+```ts
+ref<Type>(defaultValue: Type)
+```
 
 The `ref` variable works similar to the Vue.js `ref`. To access or set the value of a reference variable, access or manipulate its `value` field directly.
 
@@ -196,8 +214,12 @@ const Component = defineComponent<{}, { text: Ref<string>, onClick: () => void }
 <Component />
 ~~~
 
-#### Computed variables
-##### `computed<Type>(() => Type)`
+--------
+
+### Computed variables
+```ts
+computed<Type>(() => Type)
+```
 
 ~~~ts
 import { defineComponent, ref, h, Ref } from '@inkline/paper';
@@ -228,9 +250,13 @@ const Component = defineComponent<{ value: number; }, { double: Ref<number> }>({
 <Component />
 ~~~
 
-#### Provide and Inject
-##### `provide<Type>(identifier: string, value: Type)` 
-##### `inject<Type>(identifier: string, defaultValue?: Type): Type`
+--------
+
+### Provide and Inject
+```ts
+provide<Type>(identifier: string, value: Type) 
+inject<Type>(identifier: string, defaultValue?: Type): Type
+```
 
 ~~~ts
 import { defineComponent, ref, h, Ref } from '@inkline/paper';
@@ -278,8 +304,12 @@ const Consumer = defineComponent<{}, { value?: string; }>({
 </Provider>
 ~~~
 
-### Component props
-#### `defineComponent({ props: ComponentProps<Props> })`
+--------
+
+### Props
+```ts
+defineComponent({ props: ComponentProps<Props> })
+```
 
 Define the props using the `props` field, using the same format used in Vue.js. 
 
@@ -313,8 +343,12 @@ const Component = defineComponent<{ text: string }, {}>({
 <Component text={"Button"} />
 ~~~
 
-### Component slots
-#### `defineComponent({ slots: string[] })` and `renderContext.slot(slotName)`
+--------
+
+### Slots
+```
+defineComponent({ slots: string[] })` and `renderContext.slot(slotName)
+```
 
 The `slots` array allows you to define multiple slot names for the component. Out of the box, the `default` slot is pre-defined. 
 
@@ -353,8 +387,12 @@ const Component = defineComponent({
 </Component>
 ~~~
 
-### Component events
-#### `defineComponent({ emits: string[] })` and `setupContext.emit(eventName, ...args)`
+--------
+
+### Events
+```
+defineComponent({ emits: string[] })` and `setupContext.emit(eventName, ...args)
+```
 
 The `emits` array allows you to define event emitters. 
 
@@ -389,6 +427,8 @@ const Component = defineComponent<{}, { emitChange: () => void }>({
 <Component onChange={() => doSomething()} />
 ~~~ 
 
+<br/>
+<br/>
 
 ## Creator
 **Alex Grozav**
