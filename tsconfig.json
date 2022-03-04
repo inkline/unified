@@ -18,7 +18,6 @@
         },
         "typeRoots": [],
         "types": [
-            "@types/react",
             "@types/shelljs",
             "vite/client",
             "vitest/globals"
@@ -30,8 +29,12 @@
         "src/**/*.tsx",
         "src/**/*.vue"
     ],
+    "exclude": [
+        "src/vue",
+        "src/react"
+    ],
     "references": [{
-        "path": "./tsconfig.node.json"
+        "path": "./tsconfig.vite.json"
     }],
     "ts-node": {
         "transpileOnly": true,
