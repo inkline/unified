@@ -7,7 +7,7 @@
 <h1 align="center">Inkline - Paper</h1>
 
 <p align="center">
-    Unified interface for defining components for both Vue and React using the a single code base.<br/><br/> Inkline is written and maintained by <a href="https://github.com/alexgrozav">@alexgrozav</a>. 
+    Unified interface for defining components for Vue and React using a single code base.<br/><br/> Inkline is written and maintained by <a href="https://github.com/alexgrozav">@alexgrozav</a>. 
     <br/>
     <br/>
     <a href="https://inkline.io">Homepage</a>
