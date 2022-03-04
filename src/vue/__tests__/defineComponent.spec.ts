@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/vue';
-import { defineComponent, h, ref, Events } from '@inkline/ucd/vue';
-import { Ref } from '@inkline/ucd/types';
+import { defineComponent, h, ref, inject, provide, Events } from '@inkline/paper/vue';
+import { Ref } from '@inkline/paper/types';
 
 describe('vue', () => {
     describe('defineComponent()', () => {
@@ -292,7 +292,7 @@ describe('vue', () => {
                     const identifier = Symbol('provide');
                     const Provider = defineComponent<{}, {}>({
                         setup (props, ctx) {
-                            ctx.provide(identifier, 'value');
+                            provide(identifier, 'value');
 
                             return {};
                         },
@@ -303,9 +303,9 @@ describe('vue', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue: string; }>({
+                    const Consumer = defineComponent<{}, { providedValue?: string; }>({
                         setup (props, ctx) {
-                            const providedValue = ctx.inject<string>(identifier);
+                            const providedValue = inject<string>(identifier);
 
                             return { providedValue };
                         },
@@ -331,7 +331,7 @@ describe('vue', () => {
                             const count = ref(0);
                             const onClick = () => { count.value += 1; };
 
-                            ctx.provide(identifier, count);
+                            provide(identifier, count);
 
                             return { onClick };
                         },
@@ -342,15 +342,15 @@ describe('vue', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue: Ref<number>; }>({
+                    const Consumer = defineComponent<{}, { providedValue?: Ref<number>; }>({
                         setup (props, ctx) {
-                            const providedValue = ctx.inject<Ref<number>>(identifier);
+                            const providedValue = inject<Ref<number>>(identifier);
 
                             return { providedValue };
                         },
                         render (state) {
                             return h('div', {}, [
-                                state.providedValue.value
+                                state.providedValue?.value
                             ]);
                         }
                     });

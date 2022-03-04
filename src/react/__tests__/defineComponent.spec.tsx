@@ -3,10 +3,10 @@ import {
     defineComponent,
     h,
     ref,
-    Events
-} from '@inkline/ucd/react';
+    Events, inject, provide
+} from '@inkline/paper/react';
 import { fireEvent, render } from '@testing-library/react';
-import { Ref } from '@inkline/ucd/types';
+import { Ref } from '@inkline/paper/types';
 
 describe('react', () => {
     describe('defineComponent()', () => {
@@ -295,7 +295,7 @@ describe('react', () => {
                     const identifier = Symbol('provide-reactive');
                     const Provider = defineComponent<{}, {}>({
                         setup (props, ctx) {
-                            ctx.provide(identifier, 'value');
+                            provide(identifier, 'value');
 
                             return {};
                         },
@@ -306,15 +306,15 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue: string; }>({
+                    const Consumer = defineComponent<{}, { providedValue?: string; }>({
                         setup (props, ctx) {
-                            const providedValue = ctx.inject<string>(identifier);
+                            const providedValue = inject<string>(identifier);
 
                             return { providedValue };
                         },
                         render (state) {
                             return h('div', {}, [
-                                state.providedValue
+                                `${state.providedValue}`
                             ]);
                         }
                     });
@@ -332,7 +332,7 @@ describe('react', () => {
                             const count = ref(0);
                             const onClick = () => { count.value += 1; };
 
-                            ctx.provide(identifier, count);
+                            provide(identifier, count);
 
                             return { onClick };
                         },
@@ -343,15 +343,15 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue: Ref<number>; }>({
+                    const Consumer = defineComponent<{}, { providedValue?: Ref<number>; }>({
                         setup (props, ctx) {
-                            const providedValue = ctx.inject<Ref<number>>(identifier);
+                            const providedValue = inject<Ref<number>>(identifier);
 
                             return { providedValue };
                         },
                         render (state) {
                             return h('div', {}, [
-                                state.providedValue?.value
+                                `${state.providedValue?.value}`
                             ]);
                         }
                     });
@@ -370,7 +370,7 @@ describe('react', () => {
                             const text = ref(props.id);
                             const onClick = () => { text.value = 'abc'; };
 
-                            ctx.provide(props.id, text);
+                            provide(props.id, text);
 
                             return { onClick };
                         },
@@ -381,15 +381,15 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{ id: string; }, { providedValue: Ref<string>; }>({
+                    const Consumer = defineComponent<{ id: string; }, { providedValue?: Ref<string>; }>({
                         setup (props, ctx) {
-                            const providedValue = ctx.inject<Ref<string>>(props.id);
+                            const providedValue = inject<Ref<string>>(props.id);
 
                             return { providedValue };
                         },
                         render (state) {
                             return h('div', {}, [
-                                state.providedValue?.value
+                                `${state.providedValue?.value}`
                             ]);
                         }
                     });

@@ -19,8 +19,6 @@ export type ComponentProps<Props> = {
 }
 
 export interface SetupContext {
-    provide<T>(identifier: string | symbol, value: T): void;
-    inject<T>(identifier: string | symbol, defaultValue?: T | (() => T)): T;
     emit: (eventName: string, ...args: any[]) => void
 }
 

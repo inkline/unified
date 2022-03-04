@@ -8,26 +8,30 @@ export default defineConfig({
     resolve: {
         alias: [
             {
-                find: /^@inkline\/ucd\//,
+                find: /^@inkline\/paper\//,
                 replacement: `${resolve(__dirname)}/src/`
             }
         ]
     },
     build: {
         lib: {
-            entry: resolve(__dirname, 'src', 'vue', 'index.ts'),
-            name: 'UniversalComponentDefinition',
-            fileName: (format) => `ucd.${format}.js`
+            entry: resolve(__dirname, 'src', 'react', 'index.ts'),
+            name: 'InklinePaper',
+            fileName: (format) => `paper.${format}.js`
         },
         rollupOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: ['vue'],
+            external: [
+                'react',
+                'vue'
+            ],
             output: {
                 exports: 'named',
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {
+                    react: 'React',
                     vue: 'Vue'
                 }
             }

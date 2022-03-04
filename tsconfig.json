@@ -14,11 +14,12 @@
         "rootDir": "src",
         "outDir": "lib",
         "paths": {
-            "@inkline/ucd/*": ["./src/*"]
+            "@inkline/paper/*": ["./src/*"]
         },
         "typeRoots": [],
         "types": [
             "@types/react",
+            "@types/shelljs",
             "vite/client",
             "vitest/globals"
         ]

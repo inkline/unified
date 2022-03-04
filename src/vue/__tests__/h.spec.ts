@@ -1,4 +1,4 @@
-import { h } from '@inkline/ucd/vue';
+import { h } from '@inkline/paper/vue';
 
 describe('vue', () => {
     describe('h()', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { computed, ref } from '@inkline/ucd/react';
+import { computed, ref } from '@inkline/paper/react';
 import { fireEvent, render } from '@testing-library/react';
 
 describe('react', () => {

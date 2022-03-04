@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Ref } from '@inkline/ucd/types';
+import { Ref } from '@inkline/paper/types';
 
 export function ref<T> (initialValue: T): Ref<T> {
     const [state, setState] = useState<T>(initialValue);

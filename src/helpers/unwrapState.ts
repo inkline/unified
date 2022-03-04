@@ -1,4 +1,4 @@
-import { UnwrapState } from '@inkline/ucd/types';
+import { UnwrapState } from '@inkline/paper/types';
 
 export function unwrapState<State extends Record<string, any>> (state: State): UnwrapState<State> {
     const newState: Record<string, any> = {};

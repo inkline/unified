@@ -1,5 +1,5 @@
-import { Slots } from '@inkline/ucd/react/types';
-import { capitalizeFirst } from '@inkline/ucd/helpers';
+import { Slots } from '@inkline/paper/react/types';
+import { capitalizeFirst } from '@inkline/paper/helpers';
 
 /**
  * Retrieve children for given named slot. If retrieving for 'default' slot, retrieve direct un-slotted children as well

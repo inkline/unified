@@ -1,6 +1,6 @@
 import { SetupContext as VueSetupContext, provide, inject } from 'vue';
-import { VNode } from '@inkline/ucd/vue/types';
-import { ComponentDefinition, SetupContext, RenderContext } from '@inkline/ucd/types';
+import { VNode } from '@inkline/paper/vue/types';
+import { ComponentDefinition, SetupContext, RenderContext } from '@inkline/paper/types';
 
 /**
  * Define Vue component using Composition API and setup()
@@ -16,9 +16,7 @@ export function defineComponent<Props extends Record<string, any> = {}, State ex
         props: definition.props || {},
         setup (props: Props, { slots, emit }: VueSetupContext) {
             const setupContext: SetupContext = {
-                emit,
-                provide,
-                inject
+                emit
             };
 
             const renderContext: RenderContext = {

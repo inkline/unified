@@ -1,0 +1,1 @@
+{"version":3,"file":"VueComponent.js","sourceRoot":"","sources":["../../src/__mocks__/VueComponent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,CAAC,EAAE,MAAM,oBAAoB,CAAC;AAIxD,eAAe,eAAe,CAAQ;IAClC,KAAK,CAAE,KAAK;QACR,OAAO,GAAG,EAAE,CAAC,CAAC,CAAC,IAAI,EAAE,EAAE,EAAE,EAAE,CAAC,CAAC;IACjC,CAAC;CACJ,CAAC,CAAC"}

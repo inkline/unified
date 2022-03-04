@@ -1,46 +1,8 @@
-import { Slots, VNode } from '@inkline/ucd/react/types';
-import { ComponentDefinition, ComponentProps, RenderContext, SetupContext } from '@inkline/ucd/types';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { capitalizeFirst } from '@inkline/ucd/helpers';
-import { getSlotChildren, normalizeEventName } from '@inkline/ucd/react/helpers';
-
-/**
- * Global providers, identified uniquely using a symbol or string
- */
-const providers: {
-    [key: string | symbol]: {
-        state: any;
-        setState(newValue: any): void;
-        notify(newValue: any): void;
-    };
-} = {};
-
-/**
- * Register provider
- *
- * @param identifier
- * @param value
- */
-function registerProvider <T> (identifier: string | symbol, value: T): void {
-    providers[identifier] = {
-        state: value,
-        setState (newValue: any) {
-            providers[identifier].state = newValue;
-        },
-        notify () {}
-    };
-}
-
-/**
- * Update provider
- *
- * @param identifier
- * @param value
- */
-function updateProvider <T> (identifier: string | symbol, value: T): void {
-    providers[identifier].setState(value);
-    providers[identifier].notify(value);
-}
+import { Slots, VNode } from '@inkline/paper/react/types';
+import { ComponentDefinition, ComponentProps, RenderContext, SetupContext } from '@inkline/paper/types';
+import { PropsWithChildren } from 'react';
+import { capitalizeFirst } from '@inkline/paper/helpers';
+import { getSlotChildren, normalizeEventName } from '@inkline/paper/react/helpers';
 
 /**
  * Define React component using Functional Component and named slots
@@ -68,41 +30,6 @@ export function defineComponent<Props extends Record<string, any> = {}, State ex
              */
             emit: (eventName, ...args) => {
                 props[normalizeEventName(eventName)]?.(...args);
-            },
-            /**
-             * Provide value to consumers
-             *
-             * @param identifier
-             * @param value
-             */
-            provide: (identifier, value) => {
-                useEffect(() => {
-                    if (providers[identifier]) {
-                        updateProvider(identifier, value);
-                    } else {
-                        registerProvider(identifier, value);
-                    }
-                });
-            },
-            /**
-             * Inject value from providers
-             *
-             * @param identifier
-             * @param defaultValue
-             */
-            inject: (identifier, defaultValue) => {
-                const [, setState] = useState();
-
-                if (!providers[identifier]) {
-                    defaultValue = typeof defaultValue === 'function'
-                        ? (defaultValue as () => any)()
-                        : defaultValue;
-
-                    registerProvider(identifier, defaultValue);
-                }
-
-                providers[identifier].notify = setState;
-                return providers[identifier].state;
             }
         };
 
