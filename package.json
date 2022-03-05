@@ -1,7 +1,8 @@
 {
   "name": "@inkline/paper",
-  "private": true,
+  "description": "Paper is a unified interface for defining components for Vue and React using a single code base.",
   "version": "1.0.0",
+  "author": "Alex Grozav <alex@grozav.com>",
   "scripts": {
     "dev": "vite",
     "build": "rimraf lib && npm run build:react && npm run build:vue",
@@ -48,5 +49,50 @@
     "vitest": "0.5.8",
     "vue": "3.2.25",
     "vue-tsc": "0.29.8"
+  },
+  "files": [
+    "**/*"
+  ],
+  "exports": {
+    "./react": {
+      "require": "./react/index.cjs",
+      "import": "./react/index.mjs",
+      "types": "./react/index.d.ts"
+    },
+    "./vue": {
+      "require": "./vue/index.cjs",
+      "import": "./vue/index.mjs",
+      "types": "./vue/index.d.ts"
+    },
+    "./*": "./*"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/alexgrozav"
+  },
+  "bugs": {
+    "url": "https://github.com/inkline/inkline/issues"
+  },
+  "homepage": "https://inkline.io",
+  "keywords": [
+    "inkline",
+    "react",
+    "reactjs",
+    "vue",
+    "vuejs",
+    "ui",
+    "ux",
+    "dx",
+    "components",
+    "library",
+    "framework",
+    "typescript",
+    "javascript",
+    "front end"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkline/paper.git"
   }
 }
