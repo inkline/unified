@@ -27,6 +27,7 @@ export interface RenderContext {
 }
 
 export interface ComponentDefinition<Props extends Record<string, any> = {}, State extends Record<string, any> = {}, VNode = any> {
+    name?: string;
     slots?: string[];
     emits?: string[];
     props?: ComponentProps<Props>;
