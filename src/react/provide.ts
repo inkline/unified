@@ -43,15 +43,16 @@ function updateProvider <T> (identifier: string | symbol, value: T): void {
  *
  * @param identifier
  * @param value
+ * @param dependencies
  */
-export const provide = <T>(identifier: string | symbol, value: T): void => {
+export const provide = <T>(identifier: string | symbol, value: T, dependencies: any[] = []): void => {
     useEffect(() => {
         if (providers[identifier]) {
             updateProvider(identifier, value);
         } else {
             registerProvider(identifier, value);
         }
-    });
+    }, dependencies);
 };
 
 /**

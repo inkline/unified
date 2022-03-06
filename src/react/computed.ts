@@ -1,7 +1,7 @@
 import { Ref } from '@inkline/paper/types';
 import { useMemo } from 'react';
 
-export function computed<T> (computeFn: () => T, dependencies?: any[]): Ref<T> {
+export function computed<T> (computeFn: () => T, dependencies: any[] = []): Ref<T> {
     const value = useMemo(() => computeFn(), dependencies);
 
     return {
