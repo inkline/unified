@@ -45,7 +45,7 @@ function updateProvider <T> (identifier: string | symbol, value: T): void {
  * @param value
  * @param dependencies
  */
-export const provide = <T>(identifier: string | symbol, value: T, dependencies: any[] = []): void => {
+export const provide = <T>(identifier: string | symbol, value: T, dependencies?: any[]): void => {
     useEffect(() => {
         if (providers[identifier]) {
             updateProvider(identifier, value);
