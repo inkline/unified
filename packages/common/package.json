@@ -4,5 +4,8 @@
   "scripts": {
     "test": "vitest run",
     "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
+  },
+  "devDependencies": {
+    "mjscjs": "1.0.9"
   }
 }
