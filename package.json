@@ -1,6 +1,17 @@
 {
   "name": "@inkline/paper",
-  "private": true,
+  "description": "Paper is a unified interface for defining components for Vue and React using a single code base.",
+  "version": "1.0.3",
+  "author": "Alex Grozav <alex@grozav.com>",
+  "scripts": {
+    "build": "rimraf lib && lerna run build",
+    "postbuild": "ts-node scripts/postbuild.ts",
+    "test": "lerna run test",
+    "prerelease": "npm run test && npm run build",
+    "release": "np",
+    "postrelease": "ts-node scripts/postrelease.ts",
+    "postversion": "ts-node scripts/postversion.ts"
+  },
   "devDependencies": {
     "@types/shelljs": "0.8.11",
     "@typescript-eslint/eslint-plugin": "5.13.0",
@@ -17,5 +28,60 @@
     "tsconfig-paths": "3.13.0",
     "typescript": "4.6.2",
     "vitest": "0.5.9"
+  },
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "jsdelivr": "index.cjs",
+  "unpkg": "index.cjs",
+  "types": "index.d.ts",
+  "files": [
+    "**/*"
+  ],
+  "exports": {
+    "./react": {
+      "require": "./react/index.cjs",
+      "import": "./react/index.mjs",
+      "types": "./react/index.d.ts"
+    },
+    "./vue": {
+      "require": "./vue/index.cjs",
+      "import": "./vue/index.mjs",
+      "types": "./vue/index.d.ts"
+    },
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs",
+      "types": "./index.d.ts"
+    },
+    "./*": "./*"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/alexgrozav"
+  },
+  "bugs": {
+    "url": "https://github.com/inkline/paper/issues"
+  },
+  "homepage": "https://inkline.io",
+  "keywords": [
+    "inkline",
+    "react",
+    "reactjs",
+    "vue",
+    "vuejs",
+    "ui",
+    "ux",
+    "dx",
+    "components",
+    "library",
+    "framework",
+    "typescript",
+    "javascript",
+    "front end"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkline/paper.git"
   }
 }

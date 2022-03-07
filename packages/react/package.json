@@ -1,6 +1,6 @@
 {
   "name": "@inkline/paper-react",
-  "description": "ASDF",
+  "description": "Inkline Paper React.js package.",
   "scripts": {
     "pre": "cp ../common/src/types.ts src/types.common.ts",
     "pretest": "npm run pre",
@@ -18,5 +18,10 @@
     "rimraf": "3.0.2",
     "vite": "2.8.6",
     "vitest": "0.5.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkline/paper.git"
+  },
+  "license": "ISC"
 }

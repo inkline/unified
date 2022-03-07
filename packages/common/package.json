@@ -1,11 +1,16 @@
 {
   "name": "@inkline/paper-common",
-  "main": "src/index.ts",
+  "description": "Inkline Paper Common package.",
   "scripts": {
     "test": "vitest run",
     "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
   },
   "devDependencies": {
     "mjscjs": "1.0.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkline/paper.git"
+  },
+  "license": "ISC"
 }

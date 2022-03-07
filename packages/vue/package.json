@@ -1,6 +1,6 @@
 {
   "name": "@inkline/paper-vue",
-  "description": "x",
+  "description": "Inkline Paper Vue.js package.",
   "scripts": {
     "pre": "cp ../common/src/types.ts src/types.common.ts",
     "pretest": "npm run pre",
@@ -18,7 +18,8 @@
     "vue": "3.2.31"
   },
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "git+https://github.com/inkline/paper.git"
   },
   "license": "ISC"
 }

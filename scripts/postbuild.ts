@@ -11,20 +11,17 @@ shell.cd(resolve(__dirname, '..'));
  * Copy files to lib folder
  */
 
+shell.mkdir('lib');
+shell.mv('packages/common/lib/cjs/*', 'lib');
+shell.mv('packages/common/lib/mjs/*', 'lib');
+
 [
     'react',
     'vue'
 ].forEach((packageName) => {
-    shell.mv(`lib/${packageName}`, `lib/${packageName}-tmp`);
-
-    shell.mv(`lib/${packageName}-tmp/cjs/*`, `lib/${packageName}-tmp`);
-    shell.mv(`lib/${packageName}-tmp/mjs/*`, `lib/${packageName}-tmp`);
-    shell.rm('-r', `lib/${packageName}-tmp/cjs`);
-    shell.rm('-r', `lib/${packageName}-tmp/mjs`);
-
-    shell.mv(`lib/${packageName}-tmp/*`, 'lib');
-
-    shell.rm('-r', `lib/${packageName}-tmp`);
+    shell.mkdir(`lib/${packageName}`);
+    shell.mv(`packages/${packageName}/lib/cjs/*`, `lib/${packageName}`);
+    shell.mv(`packages/${packageName}/lib/mjs/*`, `lib/${packageName}`);
 });
 
 shell.rm('-r', 'lib/**/__tests__');
