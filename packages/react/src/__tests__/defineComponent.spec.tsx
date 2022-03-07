@@ -5,8 +5,6 @@ import {
     h,
     ref,
     Events,
-    inject,
-    provide,
     Ref
 } from '../index';
 import { fireEvent, render } from '@testing-library/react';
@@ -60,7 +58,7 @@ describe('react', () => {
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
-        it('should render component with state, props, and onClick state function', () => {
+        it('should render component with state, props, and onClick state function', async () => {
             const Component = defineComponent<{ initialValue: number; }, { count: Ref<number>; onClick:() => void }>({
                 setup (props) {
                     const count = ref(props.initialValue);
@@ -79,7 +77,7 @@ describe('react', () => {
             });
 
             const wrapper = render(<Component initialValue={1} /> as any);
-            fireEvent.click(wrapper.container.firstChild as Element);
+            await fireEvent.click(wrapper.container.firstChild as Element);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -159,9 +157,6 @@ describe('react', () => {
                             'header',
                             'footer'
                         ],
-                        emits: [
-                            'onUpdateModelValue'
-                        ],
                         render (state, ctx) {
                             return h('div', {}, [
                                 ctx.slot('header'),
@@ -185,7 +180,7 @@ describe('react', () => {
             });
 
             describe('emit()', () => {
-                it('should emit event by attaching on[EventName] callback', () => {
+                it('should emit event by attaching on[EventName] callback', async () => {
                     const Component = defineComponent({
                         emits: [
                             'click'
@@ -204,12 +199,12 @@ describe('react', () => {
 
                     const onClick = vi.fn();
                     const wrapper = render(<Component onClick={onClick} /> as any);
-                    fireEvent.click(wrapper.container.firstChild as Element);
+                    await fireEvent.click(wrapper.container.firstChild as Element);
                     expect(onClick).toHaveBeenCalled();
                 });
 
-                it('should emit event with arguments', () => {
-                    const Component = defineComponent<{ [key: string]: any; }, { onClick(event: Event): void }>({
+                it('should emit event with arguments', async () => {
+                    const Component = defineComponent({
                         emits: [
                             'click'
                         ],
@@ -226,14 +221,14 @@ describe('react', () => {
                     });
 
                     const onClick = vi.fn();
-                    const wrapper = render(<Component onClick={onClick} /> as any);
-                    fireEvent.click(wrapper.container.firstChild as Element);
+                    const wrapper = render(h(Component, { onClick }) as any);
+                    await fireEvent.click(wrapper.container.firstChild as Element);
                     expect(onClick).toHaveBeenCalled();
                     expect(onClick.mock.calls[0][0]).toEqual(expect.any(Object));
                 });
 
-                it('should render component with modelValue and update:modelValue', () => {
-                    const Component = defineComponent<{ modelValue: number; [key: string]: any; }, { onClick(): void }>({
+                it('should render component with modelValue and update:modelValue', async () => {
+                    const Component = defineComponent({
                         emits: [
                             'update:modelValue'
                         ],
@@ -251,16 +246,16 @@ describe('react', () => {
 
                     let value = 3;
                     const onUpdate = vi.fn((newValue) => { value = newValue; });
-                    const wrapper = render(<Component modelValue={value} onUpdate:modelValue={onUpdate} /> as any);
+                    const wrapper = render(h(Component, { modelValue: value, onUpdateModelValue: onUpdate }) as any);
 
-                    fireEvent.click(wrapper.container.firstChild as Element);
+                    await fireEvent.click(wrapper.container.firstChild as Element);
 
                     expect(onUpdate).toHaveBeenCalled();
                     expect(value).toEqual(4);
                 });
 
-                it('should render component with input field', () => {
-                    const Component = defineComponent<{ modelValue: string; [key: string]: any; }, { onChange(event: Event): void }>({
+                it('should render component with input field', async () => {
+                    const Component = defineComponent({
                         props: {
                             modelValue: {
                                 type: String,
@@ -284,135 +279,12 @@ describe('react', () => {
 
                     let value = '';
                     const onUpdate = vi.fn((newValue) => { value = newValue; });
-                    const wrapper = render(<Component modelValue={value} onUpdate:modelValue={onUpdate} /> as any);
+                    const wrapper = render(h(Component, { modelValue: value, onUpdateModelValue: onUpdate }) as any);
 
-                    fireEvent.change(wrapper.container.firstChild as Element, { target: { value: 'abc' } });
+                    await fireEvent.change(wrapper.container.firstChild as Element, { target: { value: 'abc' } });
 
                     expect(onUpdate).toHaveBeenCalled();
                     expect(value).toEqual('abc');
-                });
-            });
-
-            describe('provide/inject()', () => {
-                it('should provide data to children', async () => {
-                    const identifier = Symbol('provide-reactive');
-                    const Provider = defineComponent({
-                        setup (props, ctx) {
-                            provide(identifier, 'value');
-
-                            return {};
-                        },
-                        render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
-                        }
-                    });
-
-                    const Consumer = defineComponent({
-                        setup (props, ctx) {
-                            const providedValue = inject(identifier);
-
-                            return { providedValue };
-                        },
-                        render (state) {
-                            return h('div', {}, [
-                                `${state.providedValue}`
-                            ]);
-                        }
-                    });
-
-                    const wrapper = render(<Provider>
-                        <Consumer />
-                    </Provider> as any);
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
-                });
-
-                it('should provide reactive data to children', async () => {
-                    const identifier = Symbol('provide-reactive');
-                    const Provider = defineComponent({
-                        setup (props, ctx) {
-                            const count = ref(0);
-                            const onClick = () => { count.value += 1; };
-
-                            provide(identifier, count);
-
-                            return { onClick };
-                        },
-                        render (state, ctx) {
-                            return h('button', { onClick: state.onClick }, [
-                                ctx.slot()
-                            ]);
-                        }
-                    });
-
-                    const Consumer = defineComponent({
-                        setup (props, ctx) {
-                            const providedValue = inject(identifier);
-
-                            return { providedValue };
-                        },
-                        render (state) {
-                            return h('div', {}, [
-                                `${state.providedValue?.value}`
-                            ]);
-                        }
-                    });
-
-                    const wrapper = render(<Provider>
-                        <Consumer />
-                    </Provider> as any);
-                    fireEvent.click(wrapper.container.firstChild as Element);
-                    expect(await wrapper.findByText('1')).toBeTruthy();
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
-                });
-
-                it('should provide reactive data based on id', async () => {
-                    const Provider = defineComponent({
-                        setup (props, ctx) {
-                            const text = ref(props.id);
-                            const onClick = () => { text.value = 'abc'; };
-
-                            provide(props.id, text);
-
-                            return { onClick };
-                        },
-                        render (state, ctx) {
-                            return h('button', { onClick: state.onClick }, [
-                                ctx.slot()
-                            ]);
-                        }
-                    });
-
-                    const Consumer = defineComponent({
-                        setup (props, ctx) {
-                            const providedValue = inject(props.id);
-
-                            return { providedValue };
-                        },
-                        render (state) {
-                            return h('div', {}, [
-                                `${state.providedValue?.value}`
-                            ]);
-                        }
-                    });
-
-                    const wrapper = render(<div>
-                        <Provider id="a">
-                            <Consumer id="a" />
-                        </Provider>
-                        <Provider id="b">
-                            <Consumer id="b" />
-                        </Provider>
-                    </div> as any);
-
-                    const buttons = wrapper.container.querySelectorAll('button');
-
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
-                    fireEvent.click(buttons[0] as Element);
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
-                    fireEvent.click(buttons[1] as Element);
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
             });
         });

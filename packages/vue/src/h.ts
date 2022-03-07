@@ -1,4 +1,9 @@
-import { h as nativeH } from 'vue';
+import { h as nativeH, VNode } from 'vue';
 import { HoistFn } from './types';
+import { DefineComponent } from '@vue/runtime-core';
 
-export const h: HoistFn = (type, props?, children?) => nativeH(type, props, children);
+export const h: HoistFn<VNode, DefineComponent> = (
+    type,
+    props?,
+    children?
+) => nativeH(type, props, children);

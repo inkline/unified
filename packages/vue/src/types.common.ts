@@ -75,8 +75,8 @@ export interface ComputedFn<T = any> {
     (computeFn: () => T, dependencies?: any[]): Ref<T>;
 }
 
-export interface HoistFn<T = any> {
-    (type: string, props?: Record<string, any>, children?: (string | number | boolean | T)[]): T
+export interface HoistFn<T = any, C = any> {
+    (type: string | C, props?: Record<string, any>, children?: (string | number | boolean | T)[]): T
 }
 
 export interface ProvideFn<T = any> {

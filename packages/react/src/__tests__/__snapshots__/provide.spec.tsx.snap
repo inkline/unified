@@ -1,0 +1,62 @@
+// Vitest Snapshot v1
+
+exports[`react > provide/inject() > should provide data to children 1`] = `
+<div>
+  <div>
+    value
+  </div>
+</div>
+`;
+
+exports[`react > provide/inject() > should provide reactive data based on id 1`] = `
+<div>
+  <button>
+    <div>
+      a
+    </div>
+  </button>
+  <button>
+    <div>
+      b
+    </div>
+  </button>
+</div>
+`;
+
+exports[`react > provide/inject() > should provide reactive data based on id 2`] = `
+<div>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+  <button>
+    <div>
+      b
+    </div>
+  </button>
+</div>
+`;
+
+exports[`react > provide/inject() > should provide reactive data based on id 3`] = `
+<div>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+  <button>
+    <div>
+      abc
+    </div>
+  </button>
+</div>
+`;
+
+exports[`react > provide/inject() > should provide reactive data to children 1`] = `
+<button>
+  <div>
+    1
+  </div>
+</button>
+`;
