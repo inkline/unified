@@ -1,20 +1,18 @@
 import { SetupContext as VueSetupContext } from 'vue';
-import { VNode } from './types';
-import { ComponentDefinition, SetupContext, RenderContext } from '@inkline/paper';
+import { SetupContext, RenderContext, DefineVueComponentFn } from './types';
 
 /**
  * Define Vue component using Composition API and setup()
  *
  * @param definition universal component definition
  */
-export function defineComponent<Props extends Record<string, any> = {}, State extends Record<string, any> = {}> (
-    definition: ComponentDefinition<Props, State, VNode>
-) {
+
+export const defineComponent: DefineVueComponentFn = (definition) => {
     return {
         emits: definition.emits || [],
         slots: definition.slots || [],
         props: definition.props || {},
-        setup (props: Props, { slots, emit }: VueSetupContext) {
+        setup (props, { slots, emit }: VueSetupContext) {
             const setupContext: SetupContext = {
                 emit
             };
@@ -27,9 +25,9 @@ export function defineComponent<Props extends Record<string, any> = {}, State ex
 
             const state = definition.setup
                 ? { ...props, ...definition.setup(props, setupContext) }
-                : props as Props & State;
+                : props;
 
             return () => definition.render(state, renderContext);
         }
     };
-}
+};

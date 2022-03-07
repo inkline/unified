@@ -1,5 +1,4 @@
-import { Slots } from '@inkline/paper/react/types';
-import { capitalizeFirst } from '@inkline/paper/helpers';
+import {Slots} from "../types";
 
 /**
  * Retrieve children for given named slot. If retrieving for 'default' slot, retrieve direct un-slotted children as well
@@ -21,8 +20,4 @@ export const getSlotChildren = (name: string, slots: Slots, children: JSX.Elemen
             return isSlot(el) ? el.props?.children || [] : el;
         })
         .flat();
-};
-
-export const normalizeEventName = (name: string): string => {
-    return `on${capitalizeFirst(name)}`;
 };

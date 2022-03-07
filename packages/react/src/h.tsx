@@ -1,10 +1,6 @@
 import React from 'react';
-import { VNode } from '@inkline/paper/react/types';
+import { VNode, HoistFn } from './types';
 
-export function h (
-    type: string,
-    props?: any,
-    children?: (string | number | boolean | VNode)[]
-): VNode {
-    return React.createElement(type, props, children) as VNode;
-}
+export const h: HoistFn<VNode> = (type, props?, children?) => {
+    return React.createElement(type, props, children);
+};

@@ -1,4 +1,5 @@
-import { h } from '@inkline/paper/react';
+import { describe, it, expect } from 'vitest';
+import { h } from '../index';
 
 describe('react', () => {
     describe('h()', () => {

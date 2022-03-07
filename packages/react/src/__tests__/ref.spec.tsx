@@ -1,6 +1,7 @@
 import React from 'react';
-import { ref } from '@inkline/paper/react';
-import {fireEvent, render} from '@testing-library/react';
+import { ref } from '../index';
+import { describe, it, expect } from 'vitest';
+import { fireEvent, render } from '@testing-library/react';
 
 describe('react', () => {
     describe('ref()', () => {

@@ -1,6 +1,6 @@
+import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/vue';
-import { defineComponent, h, ref, inject, provide, Events } from '@inkline/paper/vue';
-import { Ref } from '@inkline/paper/types';
+import { defineComponent, h, ref, inject, provide, Events } from '../index';
 
 describe('vue', () => {
     describe('defineComponent()', () => {
@@ -15,7 +15,7 @@ describe('vue', () => {
         });
 
         it('should render a vue component with state', () => {
-            const Component = defineComponent<{}, { count: Ref<number>; }>({
+            const Component = defineComponent({
                 setup () {
                     const count = ref(0);
 
@@ -33,7 +33,7 @@ describe('vue', () => {
         });
 
         it('should render a component with state and props', () => {
-            const Component = defineComponent<{ initialValue: number; }, { count: Ref<number>; }>({
+            const Component = defineComponent({
                 props: {
                     initialValue: {
                         type: Number,
@@ -61,7 +61,7 @@ describe('vue', () => {
         });
 
         it('should render a component with state, props, and onClick state function', async () => {
-            const Component = defineComponent<{ initialValue: number; }, { count: Ref<number>; onClick(): void }>({
+            const Component = defineComponent({
                 props: {
                     initialValue: {
                         type: Number,
@@ -96,7 +96,7 @@ describe('vue', () => {
         describe('context', () => {
             describe('slot()', () => {
                 it('should render react component with default slot, one child', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         render (state, ctx) {
                             return h('div', {}, [
                                 ctx.slot()
@@ -113,7 +113,7 @@ describe('vue', () => {
                 });
 
                 it('should render react component with default slot, multiple children', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         render (state, ctx) {
                             return h('div', {}, [
                                 ctx.slot()
@@ -134,7 +134,7 @@ describe('vue', () => {
                 });
 
                 it('should render react component with named slots', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         slots: [
                             'header',
                             'footer'
@@ -164,7 +164,7 @@ describe('vue', () => {
 
             describe('emit()', () => {
                 it('should emit event by using native emit', async () => {
-                    const Component = defineComponent<{ [key: string]: any; }, { onClick(): void }>({
+                    const Component = defineComponent({
                         emits: [
                             'click'
                         ],
@@ -187,7 +187,7 @@ describe('vue', () => {
                 });
 
                 it('should emit event with arguments', async () => {
-                    const Component = defineComponent<{ [key: string]: any; }, { onClick(event: Event): void }>({
+                    const Component = defineComponent({
                         emits: [
                             'click'
                         ],
@@ -211,7 +211,7 @@ describe('vue', () => {
                 });
 
                 it('should render component with modelValue and update:modelValue', async () => {
-                    const Component = defineComponent<{ modelValue: number; [key: string]: any; }, { onClick(): void }>({
+                    const Component = defineComponent({
                         props: {
                             modelValue: {
                                 type: Number,
@@ -249,7 +249,7 @@ describe('vue', () => {
                 });
 
                 it('should render component with input field', async () => {
-                    const Component = defineComponent<{ modelValue: string; [key: string]: any; }, { onChange(event: Event): void }>({
+                    const Component = defineComponent({
                         props: {
                             modelValue: {
                                 type: String,
@@ -290,7 +290,7 @@ describe('vue', () => {
             describe('provide/inject()', () => {
                 it('should provide data to children', async () => {
                     const identifier = Symbol('provide');
-                    const Provider = defineComponent<{}, {}>({
+                    const Provider = defineComponent({
                         setup (props, ctx) {
                             provide(identifier, 'value');
 
@@ -303,9 +303,9 @@ describe('vue', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue?: string; }>({
+                    const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject<string>(identifier);
+                            const providedValue = inject(identifier);
 
                             return { providedValue };
                         },
@@ -326,7 +326,7 @@ describe('vue', () => {
 
                 it('should provide reactive data to children', async () => {
                     const identifier = Symbol('provide-reactive');
-                    const Provider = defineComponent<{}, { onClick(): void }>({
+                    const Provider = defineComponent({
                         setup (props, ctx) {
                             const count = ref(0);
                             const onClick = () => { count.value += 1; };
@@ -342,9 +342,9 @@ describe('vue', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue?: Ref<number>; }>({
+                    const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject<Ref<number>>(identifier);
+                            const providedValue = inject(identifier);
 
                             return { providedValue };
                         },

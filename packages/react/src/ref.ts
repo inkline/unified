@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Ref } from '@inkline/paper/types';
+import { RefFn } from './types';
 
-export function ref<T> (initialValue: T): Ref<T> {
-    const [state, setState] = useState<T>(initialValue);
+export const ref: RefFn = (initialValue) => {
+    const [state, setState] = useState(initialValue);
 
     return {
         get value () {
             return state;
         },
-        set value (value: T) {
+        set value (value) {
             setState(value);
         }
     };
-}
+};

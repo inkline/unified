@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
+import { InjectFn, ProvideFn, Providers, RegisterProviderFn, UpdateProviderFn } from './types';
 
 /**
  * Global providers, identified uniquely using a symbol or string
  */
-const providers: {
-    [key: string | symbol]: {
-        state: any;
-        setState(newValue: any): void;
-        notify(newValue: any): void;
-    };
-} = {};
+const providers: Providers = {};
 
 /**
  * Register provider
@@ -17,7 +12,7 @@ const providers: {
  * @param identifier
  * @param value
  */
-function registerProvider <T> (identifier: string | symbol, value: T): void {
+export const registerProvider: RegisterProviderFn = (identifier, value) => {
     providers[identifier] = {
         state: value,
         setState (newValue: any) {
@@ -25,7 +20,7 @@ function registerProvider <T> (identifier: string | symbol, value: T): void {
         },
         notify () {}
     };
-}
+};
 
 /**
  * Update provider
@@ -33,10 +28,10 @@ function registerProvider <T> (identifier: string | symbol, value: T): void {
  * @param identifier
  * @param value
  */
-function updateProvider <T> (identifier: string | symbol, value: T): void {
+export const updateProvider: UpdateProviderFn = (identifier, value) => {
     providers[identifier].setState(value);
     providers[identifier].notify(value);
-}
+};
 
 /**
  * Provide value to consumers
@@ -45,7 +40,7 @@ function updateProvider <T> (identifier: string | symbol, value: T): void {
  * @param value
  * @param dependencies
  */
-export const provide = <T>(identifier: string | symbol, value: T, dependencies?: any[]): void => {
+export const provide: ProvideFn = (identifier, value, dependencies?) => {
     useEffect(() => {
         if (providers[identifier]) {
             updateProvider(identifier, value);
@@ -61,7 +56,7 @@ export const provide = <T>(identifier: string | symbol, value: T, dependencies?:
  * @param identifier
  * @param defaultValue
  */
-export const inject = <T>(identifier: string | symbol, defaultValue?: T | (() => T)): T | undefined => {
+export const inject: InjectFn = (identifier, defaultValue) => {
     const [, setState] = useState();
 
     if (!providers[identifier]) {
@@ -73,5 +68,6 @@ export const inject = <T>(identifier: string | symbol, defaultValue?: T | (() =>
     }
 
     providers[identifier].notify = setState;
+
     return providers[identifier].state;
 };

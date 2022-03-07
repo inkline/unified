@@ -1,12 +1,15 @@
 import React from 'react';
+import { describe, it, expect, vi } from 'vitest';
 import {
     defineComponent,
     h,
     ref,
-    Events, inject, provide
-} from '@inkline/paper/react';
+    Events,
+    inject,
+    provide,
+    Ref
+} from '../index';
 import { fireEvent, render } from '@testing-library/react';
-import { Ref } from '@inkline/paper/types';
 
 describe('react', () => {
     describe('defineComponent()', () => {
@@ -22,7 +25,7 @@ describe('react', () => {
         });
 
         it('should render component with state', () => {
-            const Component = defineComponent<{}, { count: Ref<number>; }>({
+            const Component = defineComponent({
                 setup () {
                     const count = ref(0);
 
@@ -183,7 +186,7 @@ describe('react', () => {
 
             describe('emit()', () => {
                 it('should emit event by attaching on[EventName] callback', () => {
-                    const Component = defineComponent<{ [key: string]: any; }, { onClick(): void }>({
+                    const Component = defineComponent({
                         emits: [
                             'click'
                         ],
@@ -293,7 +296,7 @@ describe('react', () => {
             describe('provide/inject()', () => {
                 it('should provide data to children', async () => {
                     const identifier = Symbol('provide-reactive');
-                    const Provider = defineComponent<{}, {}>({
+                    const Provider = defineComponent({
                         setup (props, ctx) {
                             provide(identifier, 'value');
 
@@ -306,9 +309,9 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue?: string; }>({
+                    const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject<string>(identifier);
+                            const providedValue = inject(identifier);
 
                             return { providedValue };
                         },
@@ -327,7 +330,7 @@ describe('react', () => {
 
                 it('should provide reactive data to children', async () => {
                     const identifier = Symbol('provide-reactive');
-                    const Provider = defineComponent<{}, { onClick(): void }>({
+                    const Provider = defineComponent({
                         setup (props, ctx) {
                             const count = ref(0);
                             const onClick = () => { count.value += 1; };
@@ -343,9 +346,9 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{}, { providedValue?: Ref<number>; }>({
+                    const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject<Ref<number>>(identifier);
+                            const providedValue = inject(identifier);
 
                             return { providedValue };
                         },
@@ -365,7 +368,7 @@ describe('react', () => {
                 });
 
                 it('should provide reactive data based on id', async () => {
-                    const Provider = defineComponent<{ id: string; }, { onClick(): void }>({
+                    const Provider = defineComponent({
                         setup (props, ctx) {
                             const text = ref(props.id);
                             const onClick = () => { text.value = 'abc'; };
@@ -381,9 +384,9 @@ describe('react', () => {
                         }
                     });
 
-                    const Consumer = defineComponent<{ id: string; }, { providedValue?: Ref<string>; }>({
+                    const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject<Ref<string>>(props.id);
+                            const providedValue = inject(props.id);
 
                             return { providedValue };
                         },

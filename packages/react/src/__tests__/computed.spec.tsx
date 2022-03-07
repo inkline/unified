@@ -1,6 +1,7 @@
 import React from 'react';
-import { computed, ref } from '@inkline/paper/react';
+import { describe, it, expect } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
+import { computed, ref } from '../index';
 
 describe('react', () => {
     describe('computed()', () => {

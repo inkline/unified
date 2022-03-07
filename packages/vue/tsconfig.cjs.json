@@ -2,9 +2,6 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "module": "commonjs",
-        "outDir": "lib/vue/cjs"
-    },
-    "exclude": [
-        "src/react"
-    ]
+        "outDir": "lib/cjs"
+    }
 }

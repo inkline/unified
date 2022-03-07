@@ -1,0 +1,4 @@
+{
+  "name": "@inkline/paper-common",
+  "main": "src/index.ts"
+}
