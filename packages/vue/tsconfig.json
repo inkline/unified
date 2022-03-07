@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.json",
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
+    "compilerOptions": {
+        "rootDir": "src",
+        "baseUrl": ".",
+        "types": [
+            "vue"
+        ],
+        "paths": {
+            "@inkline/paper": ["@inkline/paper/src"]
+        }
+    }
+}

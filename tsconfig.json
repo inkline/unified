@@ -1,0 +1,47 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "useDefineForClassFields": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "jsx": "preserve",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": ["esnext", "dom"],
+        "baseUrl": ".",
+        "rootDir": "src",
+        "outDir": "lib",
+        "typeRoots": [],
+        "types": [
+            "@types/shelljs",
+            "vite/client",
+            "vitest/globals"
+        ]
+    },
+    "include": [
+        "packages/**/*.ts",
+        "packages/**/*.d.ts",
+        "packages/**/*.tsx",
+        "packages/**/*.vue"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.vite.json"
+        },
+        {
+            "path": "./packages/react/tsconfig.json"
+        },
+        {
+            "path": "./packages/vue/tsconfig.json"
+        }
+    ],
+    "ts-node": {
+        "transpileOnly": true,
+        "compilerOptions": {
+            "module": "commonjs"
+        },
+        "require": ["tsconfig-paths/register"]
+    }
+}

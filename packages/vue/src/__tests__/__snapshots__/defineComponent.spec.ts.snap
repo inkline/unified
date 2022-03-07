@@ -1,0 +1,77 @@
+// Vitest Snapshot v1
+
+exports[`vue > defineComponent() > context > provide/inject() > should provide data to children 1`] = `
+"<div>
+  <div>value</div>
+</div>"
+`;
+
+exports[`vue > defineComponent() > context > provide/inject() > should provide reactive data to children 1`] = `
+"<button>
+  <div>1</div>
+</button>"
+`;
+
+exports[`vue > defineComponent() > context > slot() > should render react component with default slot, multiple children 1`] = `
+<div>
+  
+  
+  <span>
+    Child 1
+  </span>
+  
+  
+  <span>
+    Child 2
+  </span>
+  
+  
+  <span>
+    Child 3
+  </span>
+  
+  
+</div>
+`;
+
+exports[`vue > defineComponent() > context > slot() > should render react component with default slot, one child 1`] = `
+<div>
+  
+  <span>
+    Child
+  </span>
+  
+</div>
+`;
+
+exports[`vue > defineComponent() > context > slot() > should render react component with named slots 1`] = `
+<div>
+  
+  
+  <span>
+    Header
+  </span>
+  
+  
+  
+  
+  <span>
+    Body
+  </span>
+  
+  
+  
+  
+  <span>
+    Footer
+  </span>
+  
+  
+</div>
+`;
+
+exports[`vue > defineComponent() > should render a component with state and props 1`] = `"<button>1</button>"`;
+
+exports[`vue > defineComponent() > should render a component with state, props, and onClick state function 1`] = `"<button>2</button>"`;
+
+exports[`vue > defineComponent() > should render a vue component with state 1`] = `"<button>0</button>"`;

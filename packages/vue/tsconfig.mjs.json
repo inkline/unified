@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "esnext",
+        "outDir": "lib/vue/mjs"
+    },
+    "exclude": [
+        "src/react"
+    ]
+}
