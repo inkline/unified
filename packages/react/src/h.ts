@@ -5,4 +5,13 @@ export const h: HoistFn<VNode, FC<any>> = (
     type,
     props?,
     children?
-) => createElement(type, props, children);
+) => {
+    // Rename class to className
+    if (props?.class) {
+        const { class: className, ...properties } = props;
+        props = properties;
+        props.className = className;
+    }
+
+    return createElement(type, props, children);
+};

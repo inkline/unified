@@ -5,6 +5,7 @@
     "pre": "cp ../common/src/types.ts src/types-common.ts",
     "pretest": "npm run pre",
     "test": "vitest run",
+    "test:dev": "vitest",
     "prebuild": "npm run pre",
     "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
   },

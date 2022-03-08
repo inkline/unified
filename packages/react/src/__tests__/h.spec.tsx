@@ -33,5 +33,14 @@ describe('react', () => {
             expect(element!.type).toEqual('div');
             expect(element!.props).toEqual({ ...props, children });
         });
+
+        it('should replace class prop with className', () => {
+            const type = 'div';
+            const props = { class: 'example' };
+            const element = h(type, props);
+
+            expect(element).toBeDefined();
+            expect(element!.props).toEqual({ className: props.class, children: undefined });
+        });
     });
 });
