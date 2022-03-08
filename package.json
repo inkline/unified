@@ -1,7 +1,7 @@
 {
   "name": "@inkline/paper",
   "description": "Paper is a unified interface for defining components for Vue and React using a single code base.",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Alex Grozav <alex@grozav.com>",
   "scripts": {
     "build": "rimraf lib && lerna run build",
