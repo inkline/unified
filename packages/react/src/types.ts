@@ -1,7 +1,7 @@
-import { DefineComponentFn } from './types.common';
+import { DefineComponentFn } from './types-common';
 import { FunctionComponent } from 'react';
 
-export * from './types.common';
+export * from './types-common';
 
 export type VNode = JSX.Element | null;
 

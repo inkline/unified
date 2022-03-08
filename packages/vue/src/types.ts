@@ -1,8 +1,8 @@
-import { DefineComponentFn } from './types.common';
+import { DefineComponentFn } from './types-common';
 import { VNode } from 'vue';
 import { Component } from '@vue/runtime-core';
 
-export * from './types.common';
+export * from './types-common';
 
 export { VNode } from 'vue';
 

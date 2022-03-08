@@ -2,7 +2,7 @@
   "name": "@inkline/paper-react",
   "description": "Inkline Paper React.js package.",
   "scripts": {
-    "pre": "cp ../common/src/types.ts src/types.common.ts",
+    "pre": "cp ../common/src/types.ts src/types-common.ts",
     "pretest": "npm run pre",
     "test": "vitest run",
     "prebuild": "npm run pre",
