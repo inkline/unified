@@ -86,3 +86,11 @@ export interface ProvideFn<T = any> {
 export interface InjectFn<T = any> {
     (identifier: string | symbol, defaultValue?: T | (() => T)): T | undefined
 }
+
+/**
+ * Storybook types
+ */
+
+export interface CreateStoryFn<T> {
+    (component: T, storyArgs?: { class?: string; }): any;
+}

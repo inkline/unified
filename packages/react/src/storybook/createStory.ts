@@ -1,9 +1,8 @@
-import { defineComponent, h, ReactFC } from '../index';
+import { CreateStoryFn, h, ReactFC } from '../index';
 
-export const createStory = (Component: ReactFC<any>, args: { class?: string; } = {}) => defineComponent({
-    render: () => h('div', {
-        class: `storybook-example ${args.class || ''}`
+export const createStory: CreateStoryFn<ReactFC<any>> = (Component, storyArgs = {}) =>
+    (args: Record<string, any>) => h('div', {
+        class: `storybook-example ${storyArgs.class || ''}`
     }, [
         h(Component, args)
-    ])
-});
+    ]);
