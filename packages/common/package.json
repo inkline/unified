@@ -2,7 +2,6 @@
   "name": "@inkline/paper-common",
   "description": "Inkline Paper Common package.",
   "scripts": {
-    "test": "echo 'No tests found.'",
     "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
   },
   "devDependencies": {
