@@ -92,5 +92,5 @@ export interface InjectFn<T = any> {
  */
 
 export interface CreateStoryFn<T> {
-    (component: T, storyArgs?: { class: string; }): any;
+    (component: T, storyArgs?: { class?: string; }): any;
 }
