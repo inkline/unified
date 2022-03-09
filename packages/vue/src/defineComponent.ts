@@ -9,6 +9,7 @@ import { SetupContext, RenderContext, DefineVueComponentFn } from './types';
 
 export const defineComponent: DefineVueComponentFn = (definition) => {
     return {
+        name: definition.name || '',
         emits: definition.emits || [],
         slots: definition.slots || [],
         props: definition.props || {},
