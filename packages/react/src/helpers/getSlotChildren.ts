@@ -1,4 +1,4 @@
-import {Slots} from "../types";
+import { Slots } from '../types';
 
 /**
  * Retrieve children for given named slot. If retrieving for 'default' slot, retrieve direct un-slotted children as well

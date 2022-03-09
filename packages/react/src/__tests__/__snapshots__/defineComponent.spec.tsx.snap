@@ -1,19 +1,5 @@
 // Vitest Snapshot v1
 
-exports[`react > defineComponent() > context > slot() > should render react component with aggregated default slot and named default slot 1`] = `
-<div>
-  <span>
-    Default Slot Child 1
-  </span>
-  <span>
-    Named Default Slot Child
-  </span>
-  <span>
-    Default Slot Child 2
-  </span>
-</div>
-`;
-
 exports[`react > defineComponent() > context > slot() > should render react component with default slot, multiple children 1`] = `
 <div>
   <span>

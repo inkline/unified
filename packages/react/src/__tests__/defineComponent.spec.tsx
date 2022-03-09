@@ -18,7 +18,7 @@ describe('react', () => {
                 }
             });
 
-            const wrapper = render(<Component /> as any);
+            const wrapper = render(h(Component) as any);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -36,7 +36,7 @@ describe('react', () => {
                 }
             });
 
-            const wrapper = render(<Component /> as any);
+            const wrapper = render(h(Component) as any);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -54,7 +54,7 @@ describe('react', () => {
                 }
             });
 
-            const wrapper = render(<Component initialValue={1} /> as any);
+            const wrapper = render(h(Component, { initialValue: 1 }) as any);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -76,7 +76,7 @@ describe('react', () => {
                 }
             });
 
-            const wrapper = render(<Component initialValue={1} /> as any);
+            const wrapper = render(h(Component, { initialValue: 1 }) as any);
             await fireEvent.click(wrapper.container.firstChild as Element);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
@@ -92,9 +92,7 @@ describe('react', () => {
                         }
                     });
 
-                    const wrapper = render(<Component>
-                        <span>Child</span>
-                    </Component> as any);
+                    const wrapper = render(h(Component, {}, h('span', {}, 'Child')) as any);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
@@ -107,11 +105,11 @@ describe('react', () => {
                         }
                     });
 
-                    const wrapper = render(<Component>
-                        <span>Child 1</span>
-                        <span>Child 2</span>
-                        <span>Child 3</span>
-                    </Component> as any);
+                    const wrapper = render(h(Component, {}, [
+                        h('span', { key: 1 }, 'Child 1'),
+                        h('span', { key: 2 }, 'Child 2'),
+                        h('span', { key: 3 }, 'Child 3')
+                    ]) as any);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
@@ -124,30 +122,9 @@ describe('react', () => {
                         }
                     });
 
-                    const wrapper = render(<Component>
-                        <Component.Default>
-                            <span>Child</span>
-                        </Component.Default>
-                    </Component> as any);
-                    expect(wrapper.container.firstChild).toMatchSnapshot();
-                });
-
-                it('should render react component with aggregated default slot and named default slot', () => {
-                    const Component = defineComponent<{}, {}>({
-                        render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
-                        }
-                    });
-
-                    const wrapper = render(<Component>
-                        <span>Default Slot Child 1</span>
-                        <Component.Default>
-                            <span>Named Default Slot Child</span>
-                        </Component.Default>
-                        <span>Default Slot Child 2</span>
-                    </Component> as any);
+                    const wrapper = render(h(Component, {}, {
+                        default: () => h('span', {}, 'Child')
+                    }) as any);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
@@ -166,15 +143,11 @@ describe('react', () => {
                         }
                     });
 
-                    const wrapper = render(<Component>
-                        <Component.Header>
-                            <span>Header</span>
-                        </Component.Header>
-                        <span>Body</span>
-                        <Component.Footer>
-                            <span>Footer</span>
-                        </Component.Footer>
-                    </Component> as any);
+                    const wrapper = render(h(Component, {}, {
+                        header: () => h('span', {}, 'Header'),
+                        default: () => h('span', {}, 'Body'),
+                        footer: () => h('span', {}, 'Footer')
+                    }) as any);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
             });
@@ -198,7 +171,7 @@ describe('react', () => {
                     });
 
                     const onClick = vi.fn();
-                    const wrapper = render(<Component onClick={onClick} /> as any);
+                    const wrapper = render(h(Component, { onClick }) as any);
                     await fireEvent.click(wrapper.container.firstChild as Element);
                     expect(onClick).toHaveBeenCalled();
                 });
