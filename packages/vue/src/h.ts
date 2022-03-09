@@ -7,7 +7,7 @@ import { DefineComponent } from '@vue/runtime-core';
  *
  * @example h('p', { class: 'paragraph' }, 'Hello world')
  */
-export const h: HoistFn<VNode, DefineComponent> = (
+export const h: HoistFn<VNode, DefineComponent<any>> = (
     type,
     props?,
     children?
@@ -23,5 +23,5 @@ export const h: HoistFn<VNode, DefineComponent> = (
         } as any;
     }
 
-    return createElement(type, props, children);
+    return createElement(type as DefineComponent<any>, props, children);
 };
