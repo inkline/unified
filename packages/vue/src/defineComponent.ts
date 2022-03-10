@@ -14,20 +14,35 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
         slots: definition.slots || [],
         props: definition.props || {},
         setup (props, { slots, emit }: VueSetupContext) {
-            const setupContext: SetupContext = {
-                emit
-            };
-
+            /**
+             * Render context
+             */
             const renderContext: RenderContext = {
-                slot (name: string = 'default') {
+                slot (name = 'default') {
                     return slots[name]?.();
                 }
             };
 
+            /**
+             * Setup context
+             */
+            const setupContext: SetupContext = {
+                emit,
+                slot (name = 'default') {
+                    return !!slots[name];
+                }
+            };
+
+            /**
+             * State and props
+             */
             const state = definition.setup
                 ? { ...props, ...definition.setup(props, setupContext) }
                 : props;
 
+            /**
+             * Render
+             */
             return () => definition.render(state, renderContext);
         }
     };

@@ -26,6 +26,22 @@ export function defineComponent<
 
     const Component: ReactFC<Props> = (props) => {
         /**
+         * Render context
+         */
+        const renderContext: RenderContext = {
+            /**
+             * Render slot
+             *
+             * @param name
+             */
+            slot (name = 'default') {
+                const children = Array.isArray(props.children) ? props.children : [props.children];
+
+                return getSlotChildren(name, slots, children);
+            }
+        };
+
+        /**
          * Setup context
          */
         const setupContext: SetupContext = {
@@ -37,17 +53,14 @@ export function defineComponent<
              */
             emit: (eventName, ...args) => {
                 props[normalizeEventName(eventName)]?.(...args);
-            }
-        };
-
-        /**
-         * Render context
-         */
-        const renderContext: RenderContext = {
-            slot (name: string = 'default') {
-                const children = Array.isArray(props.children) ? props.children : [props.children];
-
-                return getSlotChildren(name, slots, children);
+            },
+            /**
+             * Helper to check if slots have children provided
+             *
+             * @param name
+             */
+            slot (name = 'default') {
+                return !!renderContext.slot(name);
             }
         };
 

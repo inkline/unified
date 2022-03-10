@@ -19,7 +19,8 @@ export type ComponentProps<Props> = {
 }
 
 export interface SetupContext {
-    emit: (eventName: string, ...args: any[]) => void
+    emit: (eventName: string, ...args: any[]) => void,
+    slot(name?: string): boolean;
 }
 
 export interface RenderContext {
