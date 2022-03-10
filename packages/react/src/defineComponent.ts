@@ -4,7 +4,10 @@ import {
     RenderContext,
     SetupContext,
     Slots,
-    VNode
+    VNode,
+    EmitFn,
+    HasSlotFn,
+    SlotFn
 } from './types';
 import { FC, PropsWithChildren } from 'react';
 import { getSlotChildren, normalizeEventName, capitalizeFirst } from './helpers';
@@ -26,42 +29,41 @@ export function defineComponent<
 
     const Component: ReactFC<Props> = (props) => {
         /**
-         * Render context
+         * Render slot
+         *
+         * @param name
          */
-        const renderContext: RenderContext = {
-            /**
-             * Render slot
-             *
-             * @param name
-             */
-            slot (name = 'default') {
-                const children = Array.isArray(props.children) ? props.children : [props.children];
+        const slot: SlotFn = (name = 'default') => {
+            const children = Array.isArray(props.children) ? props.children : [props.children];
 
-                return getSlotChildren(name, slots, children);
-            }
+            return getSlotChildren(name, slots, children);
+        };
+
+        /**
+         * Helper to check if slots have children provided
+         *
+         * @param name
+         */
+        const hasSlot: HasSlotFn = (name = 'default') => {
+            return slot(name).length > 0;
+        };
+
+        /**
+         * Emit event
+         *
+         * @param eventName
+         * @param args
+         */
+        const emit: EmitFn = (eventName, ...args) => {
+            props[normalizeEventName(eventName)]?.(...args);
         };
 
         /**
          * Setup context
          */
         const setupContext: SetupContext = {
-            /**
-             * Emit event
-             *
-             * @param eventName
-             * @param args
-             */
-            emit: (eventName, ...args) => {
-                props[normalizeEventName(eventName)]?.(...args);
-            },
-            /**
-             * Helper to check if slots have children provided
-             *
-             * @param name
-             */
-            slot (name = 'default') {
-                return !!renderContext.slot(name);
-            }
+            emit,
+            hasSlot
         };
 
         /**
@@ -70,6 +72,14 @@ export function defineComponent<
         const state = definition.setup
             ? { ...props, ...definition.setup(props, setupContext) }
             : props as Props & State;
+
+        /**
+         * Render context
+         */
+        const renderContext: RenderContext = {
+            slot,
+            hasSlot
+        };
 
         /**
          * Render

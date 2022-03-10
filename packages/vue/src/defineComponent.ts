@@ -1,5 +1,5 @@
 import { SetupContext as VueSetupContext } from 'vue';
-import { SetupContext, RenderContext, DefineVueComponentFn } from './types';
+import { SetupContext, RenderContext, DefineVueComponentFn, SlotFn, HasSlotFn } from './types';
 
 /**
  * Define Vue component using Composition API and setup()
@@ -15,12 +15,21 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
         props: definition.props || {},
         setup (props, { slots, emit }: VueSetupContext) {
             /**
-             * Render context
+             * Render slot
+             *
+             * @param name
              */
-            const renderContext: RenderContext = {
-                slot (name = 'default') {
-                    return slots[name]?.();
-                }
+            const slot: SlotFn = (name = 'default') => {
+                return slots[name]?.();
+            };
+
+            /**
+             * Helper to check if slots have children provided
+             *
+             * @param name
+             */
+            const hasSlot: HasSlotFn = (name = 'default') => {
+                return !!slots[name];
             };
 
             /**
@@ -28,9 +37,7 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
              */
             const setupContext: SetupContext = {
                 emit,
-                slot (name = 'default') {
-                    return !!slots[name];
-                }
+                hasSlot
             };
 
             /**
@@ -39,6 +46,14 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
             const state = definition.setup
                 ? { ...props, ...definition.setup(props, setupContext) }
                 : props;
+
+            /**
+             * Render context
+             */
+            const renderContext: RenderContext = {
+                slot,
+                hasSlot
+            };
 
             /**
              * Render

@@ -4,6 +4,10 @@ export type UnwrapState<State> = {
     [key in keyof State]: (State[key] & Ref<State[key]>)['value']
 };
 
+/**
+ * Component definition
+ */
+
 export type ConstructorType =
     | NumberConstructor
     | StringConstructor
@@ -18,13 +22,26 @@ export type ComponentProps<Props> = {
     };
 }
 
+export interface EmitFn {
+    (eventName: string, ...args: any[]): void;
+}
+
+export interface SlotFn<T = any> {
+    (name?: string): T;
+}
+
+export interface HasSlotFn {
+    (name?: string): boolean;
+}
+
 export interface SetupContext {
-    emit: (eventName: string, ...args: any[]) => void,
-    slot(name?: string): boolean;
+    emit: EmitFn;
+    hasSlot: HasSlotFn;
 }
 
 export interface RenderContext {
-    slot(name?: string): any;
+    slot: SlotFn;
+    hasSlot: HasSlotFn;
 }
 
 export interface ComponentDefinition<
