@@ -90,11 +90,12 @@ export function defineComponent<
     /**
      * Slots
      */
-    ['default'].concat(definition.slots || []).forEach((name) => {
-        slots[name] = () => null;
-        slots[name].key = name;
-        Component[capitalizeFirst(name)] = slots[name];
-    });
+    ['default'].concat(definition.slots?.filter((slotName) => slotName !== 'default') || [])
+        .forEach((name) => {
+            slots[name] = () => null;
+            slots[name].key = name;
+            Component[capitalizeFirst(name)] = slots[name];
+        });
 
     /**
      * Default props
