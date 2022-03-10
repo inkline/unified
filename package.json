@@ -4,6 +4,7 @@
   "version": "1.1.6",
   "author": "Alex Grozav <alex@grozav.com>",
   "scripts": {
+    "pre": "lerna run pre",
     "build": "rimraf lib && lerna run build",
     "postbuild": "ts-node scripts/postbuild.ts",
     "test": "lerna run test",

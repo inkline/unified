@@ -75,6 +75,10 @@ export interface ComputedFn<T = any> {
     (computeFn: () => T, dependencies?: any[]): Ref<T>;
 }
 
+export interface WatchFn<T = any> {
+    (dependency: () => T, callback: (newValue: T) => void): void;
+}
+
 export interface HoistFn<T = any, D = any, C = (string | number | boolean | T)> {
     (type: string | D, props?: Record<string, any>, children?: C | C[] | Record<string, () => (C | C[])>): T
 }

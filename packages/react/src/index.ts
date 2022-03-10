@@ -6,3 +6,4 @@ export * from './helpers';
 export * from './provide';
 export * from './ref';
 export * from './types';
+export * from './watch';
