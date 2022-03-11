@@ -1,5 +1,6 @@
 export * from './computed';
 export * from './defineComponent';
+export * from './definePlugin';
 export * from './events';
 export * from './h';
 export * from './provide';

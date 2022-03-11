@@ -110,6 +110,18 @@ export interface InjectFn<T = any> {
 }
 
 /**
+ * Plugin types
+ */
+
+export interface DefinePluginContext {
+    provide: ProvideFn;
+}
+
+export interface DefinePluginFn<Plugin, Options = any> {
+    (setup: (options: Options, context: DefinePluginContext) => void): Plugin;
+}
+
+/**
  * Storybook types
  */
 
