@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import {
     defineComponent,
     h,
+    Fragment,
     ref,
     Events,
     Ref
@@ -14,11 +15,11 @@ describe('react', () => {
         it('should render component', () => {
             const Component = defineComponent({
                 render () {
-                    return h('div');
+                    return <div />;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -30,31 +31,27 @@ describe('react', () => {
                     return { count };
                 },
                 render (state) {
-                    return h('button', {}, [
-                        `${state.count.value}`
-                    ]);
+                    return <button>{state.count.value}</button>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
         it('should render component with state and props', () => {
-            const Component = defineComponent<{ initialValue: number; }, { count: Ref<number>; }>({
+            const Component = defineComponent({
                 setup (props) {
                     const count = ref(props.initialValue);
 
                     return { count };
                 },
                 render (state) {
-                    return h('button', {}, [
-                        `${state.count.value}`
-                    ]);
+                    return <button>{state.count.value}</button>;
                 }
             });
 
-            const wrapper = render(h(Component, { initialValue: 1 }) as any);
+            const wrapper = render(<Component initialValue={1} />);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -70,13 +67,11 @@ describe('react', () => {
                     return { count, onClick };
                 },
                 render (state) {
-                    return h('button', { onClick: state.onClick }, [
-                        `${state.count.value}`
-                    ]);
+                    return <button onClick={state.onClick}>{state.count.value}</button>;
                 }
             });
 
-            const wrapper = render(h(Component, { initialValue: 1 }) as any);
+            const wrapper = render(<Component initialValue={1} />);
             await fireEvent.click(wrapper.container.firstChild as Element);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
@@ -86,68 +81,70 @@ describe('react', () => {
                 it('should render react component with default slot, one child', () => {
                     const Component = defineComponent<{}, {}>({
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>
+                                {ctx.slot()}
+                            </div>;
                         }
                     });
 
-                    const wrapper = render(h(Component, {}, h('span', {}, 'Child')) as any);
+                    const wrapper = render(<Component>
+                        <span>Child</span>
+                    </Component>);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
                 it('should render react component with default slot, multiple children', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>
+                                {ctx.slot()}
+                            </div>;
                         }
                     });
 
-                    const wrapper = render(h(Component, {}, [
-                        h('span', { key: 1 }, 'Child 1'),
-                        h('span', { key: 2 }, 'Child 2'),
-                        h('span', { key: 3 }, 'Child 3')
-                    ]) as any);
+                    const wrapper = render(<Component>
+                        <span>Child 1</span>
+                        <span>Child 2</span>
+                        <span>Child 3</span>
+                    </Component>);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
                 it('should render react component with named default slot', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>
+                                {ctx.slot()}
+                            </div>;
                         }
                     });
 
-                    const wrapper = render(h(Component, {}, {
-                        default: () => h('span', {}, 'Child')
-                    }) as any);
+                    const wrapper = render(<Component>{{
+                        default: () => <span>Child</span>
+                    }}</Component>);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
 
                 it('should render react component with named slots', () => {
-                    const Component = defineComponent<{}, {}>({
+                    const Component = defineComponent({
                         slots: [
                             'header',
                             'footer'
                         ],
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot('header'),
-                                ctx.slot(),
-                                ctx.slot('footer')
-                            ]);
+                            return <div>
+                                {ctx.slot('header')}
+                                {ctx.slot()}
+                                {ctx.slot('footer')}
+                            </div>;
                         }
                     });
 
-                    const wrapper = render(h(Component, {}, {
-                        header: () => h('span', {}, 'Header'),
-                        default: () => h('span', {}, 'Body'),
-                        footer: () => h('span', {}, 'Footer')
-                    }) as any);
+                    const wrapper = render(<Component>{{
+                        header: () => <span>Header</span>,
+                        default: () => <span>Body</span>,
+                        footer: () => <span>Footer</span>
+                    }}</Component>);
                     expect(wrapper.container.firstChild).toMatchSnapshot();
                 });
             });
@@ -166,12 +163,12 @@ describe('react', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
                     const onClick = vi.fn();
-                    const wrapper = render(h(Component, { onClick }) as any);
+                    const wrapper = render(<Component onClick={onClick} />);
                     await fireEvent.click(wrapper.container.firstChild as Element);
                     expect(onClick).toHaveBeenCalled();
                 });
@@ -189,12 +186,12 @@ describe('react', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
                     const onClick = vi.fn();
-                    const wrapper = render(h(Component, { onClick }) as any);
+                    const wrapper = render(<Component onClick={onClick} />);
                     await fireEvent.click(wrapper.container.firstChild as Element);
                     expect(onClick).toHaveBeenCalled();
                     expect(onClick.mock.calls[0][0]).toEqual(expect.any(Object));
@@ -213,13 +210,13 @@ describe('react', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
                     let value = 3;
                     const onUpdate = vi.fn((newValue) => { value = newValue; });
-                    const wrapper = render(h(Component, { modelValue: value, onUpdateModelValue: onUpdate }) as any);
+                    const wrapper = render(<Component modelValue={value} onUpdateModelValue={onUpdate} />);
 
                     await fireEvent.click(wrapper.container.firstChild as Element);
 
@@ -246,13 +243,17 @@ describe('react', () => {
                             return { onChange };
                         },
                         render (state) {
-                            return h('input', { value: state.modelValue, [Events.onInputChange]: state.onChange });
+                            const events = {
+                                [Events.onInputChange]: state.onChange
+                            };
+
+                            return <input value={state.modelValue} {...events} />;
                         }
                     });
 
                     let value = '';
                     const onUpdate = vi.fn((newValue) => { value = newValue; });
-                    const wrapper = render(h(Component, { modelValue: value, onUpdateModelValue: onUpdate }) as any);
+                    const wrapper = render(<Component modelValue={value} onUpdateModelValue={onUpdate} />);
 
                     await fireEvent.change(wrapper.container.firstChild as Element, { target: { value: 'abc' } });
 

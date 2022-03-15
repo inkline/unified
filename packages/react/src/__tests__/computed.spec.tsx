@@ -16,11 +16,11 @@ describe('react', () => {
                     return { state };
                 },
                 render ({ state }) {
-                    return h('div', {}, [state.value]);
+                    return <div>{state.value}</div>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -36,11 +36,11 @@ describe('react', () => {
                     return { state };
                 },
                 render ({ state }) {
-                    return h('div', {}, [state.value]);
+                    return <div>{state.value}</div>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -59,11 +59,11 @@ describe('react', () => {
                     return { state, onClick };
                 },
                 render ({ state, onClick }) {
-                    return h('div', { onClick }, [state.value]);
+                    return <div onClick={onClick}>{state.value}</div>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             await fireEvent.click(wrapper.container.firstChild as Element);
 
             expect(wrapper.container.firstChild).toMatchSnapshot();

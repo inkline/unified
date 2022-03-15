@@ -21,13 +21,43 @@ describe('react', () => {
             expect(element!.props).toEqual(props);
         });
 
-        it('should return native element with children', () => {
+        it('should return native element with one child', () => {
             const type = 'div';
             const props = { id: 'app' };
             const children = [
                 h('span', { key: 0 })
             ];
             const element = h(type, props, children);
+
+            expect(element).toBeDefined();
+            expect(element!.type).toEqual('div');
+            expect(element!.props).toEqual({ ...props, children });
+        });
+
+        it('should return native element with multiple children', () => {
+            const type = 'div';
+            const props = { id: 'app' };
+            const children = [
+                h('span', { key: 0 }),
+                h('span', { key: 1 }),
+                h('span', { key: 2 })
+            ];
+            const element = h(type, props, children);
+
+            expect(element).toBeDefined();
+            expect(element!.type).toEqual('div');
+            expect(element!.props).toEqual({ ...props, children });
+        });
+
+        it('should accept multiple children as spread argument', () => {
+            const type = 'div';
+            const props = { id: 'app' };
+            const children = [
+                h('span', { key: 0 }),
+                h('span', { key: 1 }),
+                h('span', { key: 2 })
+            ];
+            const element = h(type, props, ...children);
 
             expect(element).toBeDefined();
             expect(element!.type).toEqual('div');

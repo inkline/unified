@@ -98,7 +98,11 @@ export interface WatchFn<T = any> {
 }
 
 export interface HoistFn<T = any, D = any, C = (string | number | boolean | T)> {
-    (type: string | D, props?: Record<string, any>, children?: C | C[] | Record<string, () => (C | C[])>): T
+    (type: string | D, props?: Record<string, any>, ...children: (C | C[] | Record<string, () => (C | C[])>)[]): T
+}
+
+export interface FragmentFn<C> {
+    (props: { children?: C | C[] }): C | C[] | undefined;
 }
 
 export interface ProvideFn<T = any> {

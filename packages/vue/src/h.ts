@@ -11,7 +11,7 @@ import { DefineComponent } from '@vue/runtime-core';
 export const h: HoistFn<VNode, DefineComponent<any>> = (
     type,
     props?,
-    children?
+    ...children
 ) => {
-    return createElement(type as DefineComponent<any>, props, children);
+    return createElement(type as DefineComponent<any>, props, ...children);
 };

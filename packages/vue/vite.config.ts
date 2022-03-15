@@ -8,6 +8,11 @@ export default defineConfig({
     plugins: [
         vue()
     ],
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment',
+        jsxInject: ''
+    },
     resolve: {
         alias: [
             {

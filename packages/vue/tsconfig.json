@@ -11,6 +11,8 @@
         "moduleResolution": "node",
         "strict": true,
         "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment",
         "skipLibCheck": true,
         "sourceMap": true,
         "resolveJsonModule": true,

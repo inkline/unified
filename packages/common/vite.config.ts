@@ -5,6 +5,11 @@ import { configDefaults } from 'vitest/config';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [],
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment',
+        jsxInject: ''
+    },
     resolve: {
         alias: [
             {

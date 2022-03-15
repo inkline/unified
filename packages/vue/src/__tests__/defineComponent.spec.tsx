@@ -7,7 +7,7 @@ describe('vue', () => {
         it('should render component', () => {
             const componentDefinition = defineComponent({
                 render () {
-                    return h('div');
+                    return <div />;
                 }
             });
 
@@ -22,9 +22,9 @@ describe('vue', () => {
                     return { count };
                 },
                 render (state) {
-                    return h('button', {}, [
-                        `${state.count.value}`
-                    ]);
+                    return <button>
+                        {state.count.value}
+                    </button>;
                 }
             });
 
@@ -46,9 +46,7 @@ describe('vue', () => {
                     return { count };
                 },
                 render (state) {
-                    return h('button', {}, [
-                        `${state.count.value}`
-                    ]);
+                    return <button>{state.count.value}</button>;
                 }
             });
 
@@ -78,9 +76,7 @@ describe('vue', () => {
                     return { count, onClick };
                 },
                 render (state) {
-                    return h('button', { onClick: () => state.onClick() }, [
-                        `${state.count.value}`
-                    ]);
+                    return <button onClick={() => state.onClick() }>{state.count.value}</button>;
                 }
             });
 
@@ -98,9 +94,7 @@ describe('vue', () => {
                 it('should render react component with default slot, one child', () => {
                     const Component = defineComponent({
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>{ctx.slot()}</div>;
                         }
                     });
 
@@ -115,9 +109,9 @@ describe('vue', () => {
                 it('should render react component with default slot, multiple children', () => {
                     const Component = defineComponent({
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>
+                                {ctx.slot()}
+                            </div>;
                         }
                     });
 
@@ -143,11 +137,11 @@ describe('vue', () => {
                             'onUpdateModelValue'
                         ],
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot('header'),
-                                ctx.slot(),
-                                ctx.slot('footer')
-                            ]);
+                            return <div>
+                                {ctx.slot('header')}
+                                {ctx.slot()}
+                                {ctx.slot('footer')}
+                            </div>;
                         }
                     });
 
@@ -176,7 +170,7 @@ describe('vue', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
@@ -199,7 +193,7 @@ describe('vue', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
@@ -229,7 +223,7 @@ describe('vue', () => {
                             return { onClick };
                         },
                         render (state) {
-                            return h('button', { onClick: state.onClick }, ['Button']);
+                            return <button onClick={state.onClick}>Button</button>;
                         }
                     });
 
@@ -267,7 +261,11 @@ describe('vue', () => {
                             return { onChange };
                         },
                         render (state) {
-                            return h('input', { value: state.modelValue, [Events.onInputChange]: state.onChange });
+                            const events = {
+                                [Events.onInputChange]: state.onChange
+                            };
+
+                            return <input value={state.modelValue} {...events} />;
                         }
                     });
 
@@ -297,9 +295,7 @@ describe('vue', () => {
                             return {};
                         },
                         render (state, ctx) {
-                            return h('div', {}, [
-                                ctx.slot()
-                            ]);
+                            return <div>{ctx.slot()}</div>;
                         }
                     });
 
@@ -310,9 +306,7 @@ describe('vue', () => {
                             return { providedValue };
                         },
                         render (state) {
-                            return h('div', {}, [
-                                state.providedValue
-                            ]);
+                            return <div>{state.providedValue}</div>;
                         }
                     });
 
@@ -336,9 +330,7 @@ describe('vue', () => {
                             return { onClick };
                         },
                         render (state, ctx) {
-                            return h('button', { onClick: state.onClick }, [
-                                ctx.slot()
-                            ]);
+                            return <button onClick={state.onClick}>{ctx.slot()}</button>;
                         }
                     });
 
@@ -349,9 +341,7 @@ describe('vue', () => {
                             return { providedValue };
                         },
                         render (state) {
-                            return h('div', {}, [
-                                state.providedValue?.value
-                            ]);
+                            return <div>{state.providedValue?.value}</div>;
                         }
                     });
 

@@ -8,11 +8,11 @@ describe('react', () => {
             const Plugin = definePlugin(() => {});
             const Component = defineComponent({
                 render () {
-                    return h('div', {}, 'Hello world!');
+                    return <div>Hello world!</div>;
                 }
             });
 
-            const wrapper = render(h(Plugin, {}, h(Component)) as any);
+            const wrapper = render(<Plugin><Component /></Plugin>);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -26,11 +26,11 @@ describe('react', () => {
             });
             const Component = defineComponent({
                 render () {
-                    return h('div', {}, 'Hello world!');
+                    return <div>Hello world!</div>;
                 }
             });
 
-            render(h(Plugin, { options: pluginOptions }, h(Component)) as any);
+            render(<Plugin options={pluginOptions}><Component /></Plugin>);
         });
 
         it('should provide data to children', () => {
@@ -47,11 +47,11 @@ describe('react', () => {
                     return { data };
                 },
                 render ({ data }) {
-                    return h('div', {}, data?.color);
+                    return <div>{data?.color}</div>;
                 }
             });
 
-            const wrapper = render(h(Plugin, {}, h(Component)) as any);
+            const wrapper = render(<Plugin><Component /></Plugin>);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
     });

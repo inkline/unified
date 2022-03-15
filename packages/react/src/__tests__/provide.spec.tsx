@@ -13,9 +13,7 @@ describe('react', () => {
                     return {};
                 },
                 render (state, ctx) {
-                    return h('div', {}, [
-                        ctx.slot()
-                    ]);
+                    return <div>{ctx.slot()}</div>;
                 }
             });
 
@@ -26,15 +24,13 @@ describe('react', () => {
                     return { providedValue };
                 },
                 render (state) {
-                    return h('div', {}, [
-                        `${state.providedValue}`
-                    ]);
+                    return <div>{state.providedValue}</div>;
                 }
             });
 
-            const wrapper = render(h(Provider, {}, [
-                h(Consumer, { key: 'consumer' })
-            ]) as any);
+            const wrapper = render(<Provider>
+                <Consumer key={'consumer'} />
+            </Provider>);
             expect(wrapper.container.firstChild).toMatchSnapshot();
         });
 
@@ -50,9 +46,7 @@ describe('react', () => {
                     return { onClick };
                 },
                 render (state, ctx) {
-                    return h('button', { onClick: state.onClick }, [
-                        ctx.slot()
-                    ]);
+                    return <button onClick={state.onClick}>{ctx.slot()}</button>;
                 }
             });
 
@@ -63,15 +57,13 @@ describe('react', () => {
                     return { providedValue };
                 },
                 render (state) {
-                    return h('div', {}, [
-                        `${state.providedValue?.value}`
-                    ]);
+                    return <div>{state.providedValue?.value}</div>;
                 }
             });
 
-            const wrapper = render(h(Provider, {}, [
-                h(Consumer, { key: 'consumer' })
-            ]) as any);
+            const wrapper = render(<Provider>
+                <Consumer key={'consumer'} />
+            </Provider>);
             await fireEvent.click(wrapper.container.firstChild as Element);
             expect(await wrapper.findByText('1')).toBeTruthy();
             expect(wrapper.container.firstChild).toMatchSnapshot();
@@ -88,9 +80,7 @@ describe('react', () => {
                     return { onClick };
                 },
                 render (state, ctx) {
-                    return h('button', { onClick: state.onClick }, [
-                        ctx.slot()
-                    ]);
+                    return <button onClick={state.onClick}>{ctx.slot()}</button>;
                 }
             });
 
@@ -101,22 +91,20 @@ describe('react', () => {
                     return { providedValue };
                 },
                 render (state) {
-                    return h('div', {}, [
-                        `${state.providedValue?.value}`
-                    ]);
+                    return <div>{state.providedValue?.value}</div>;
                 }
             });
 
-            const wrapper = render(h('div', {}, [
-                h(Provider, { id: 'a', key: 'a' }, [
-                    h(Consumer, { id: 'a', key: 'aa' })
-                ]),
-                h(Provider, { id: 'b', key: 'b' }, [
-                    h(Consumer, { id: 'b', key: 'bb' })
-                ])
-            ]) as any);
-            const buttons = wrapper.container.querySelectorAll('button');
+            const wrapper = render(<div>
+                <Provider id={'a'}>
+                    <Consumer id={'a'} />
+                </Provider>
+                <Provider id={'b'}>
+                    <Consumer id={'b'}/>
+                </Provider>
+            </div>);
 
+            const buttons = wrapper.container.querySelectorAll('button');
             expect(wrapper.container.firstChild).toMatchSnapshot();
             await fireEvent.click(buttons[0] as Element);
             expect(wrapper.container.firstChild).toMatchSnapshot();

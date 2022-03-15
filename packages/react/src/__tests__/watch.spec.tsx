@@ -19,11 +19,11 @@ describe('react', () => {
                     return { state, onClick };
                 },
                 render ({ state, onClick }) {
-                    return h('button', { onClick }, [state.value]);
+                    return <button onClick={onClick}>{state.value}</button>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             fireEvent.click(wrapper.container.firstChild as Element);
             expect(callback).toHaveBeenCalledOnce();
             expect(callback).toHaveBeenCalledWith('new');
@@ -44,11 +44,11 @@ describe('react', () => {
                     return { state, onClick };
                 },
                 render ({ state, onClick }) {
-                    return h('button', { onClick }, [state.value]);
+                    return <button onClick={onClick}>{state.value}</button>;
                 }
             });
 
-            const wrapper = render(h(Component) as any);
+            const wrapper = render(<Component />);
             fireEvent.click(wrapper.container.firstChild as Element);
             expect(callback).toHaveBeenNthCalledWith(1, 1);
             fireEvent.click(wrapper.container.firstChild as Element);

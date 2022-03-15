@@ -15,7 +15,6 @@ exports[`vue > defineComponent() > context > provide/inject() > should provide r
 exports[`vue > defineComponent() > context > slot() > should render react component with default slot, multiple children 1`] = `
 <div>
   
-  
   <span>
     Child 1
   </span>
@@ -30,17 +29,14 @@ exports[`vue > defineComponent() > context > slot() > should render react compon
     Child 3
   </span>
   
-  
 </div>
 `;
 
 exports[`vue > defineComponent() > context > slot() > should render react component with default slot, one child 1`] = `
 <div>
-  
   <span>
     Child
   </span>
-  
 </div>
 `;
 

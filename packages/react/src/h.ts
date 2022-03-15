@@ -10,7 +10,7 @@ import { capitalizeFirst } from './helpers';
 export const h: HoistFn<VNode, FC<any>> = (
     type,
     props?,
-    children?
+    ...children
 ) => {
     /**
      * Rename class to className
@@ -28,8 +28,8 @@ export const h: HoistFn<VNode, FC<any>> = (
      *
      * @example h(Component, {}, { slotName: () => children });
      */
-    if (typeof type === 'function' && typeof children === 'object' && !Array.isArray(children) && !(children as any).$$typeof) {
-        children = Object.entries(children as Record<string, () => VNode>)
+    if (typeof type === 'function' && typeof children[0] === 'object' && !Array.isArray(children[0]) && !(children[0] as any).$$typeof) {
+        children = Object.entries(children[0] as Record<string, () => VNode>)
             .map(([rawSlotName, childrenFn]) => {
                 const slotName = capitalizeFirst(rawSlotName);
                 const slotComponent = (type as FC<any> & { [key: string]: any })[slotName];
@@ -38,5 +38,5 @@ export const h: HoistFn<VNode, FC<any>> = (
             });
     }
 
-    return createElement(type, props, children);
+    return createElement(type, props, ...children);
 };

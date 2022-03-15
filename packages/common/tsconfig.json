@@ -8,6 +8,9 @@
         "rootDir": "src",
         "baseUrl": ".",
         "types": [],
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment",
         "paths": {
             "@inkline/paper": ["@inkline/paper/src"]
         }

@@ -2,6 +2,7 @@ export * from './computed';
 export * from './defineComponent';
 export * from './definePlugin';
 export * from './events';
+export * from './fragment';
 export * from './h';
 export * from './provide';
 export * from './ref';
