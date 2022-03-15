@@ -1,3 +1,5 @@
 import { DefinePluginFn } from './types';
 
-export const definePlugin: DefinePluginFn<any, any> = () => ({});
+export type DefineGenericPluginFn<Options = any> = DefinePluginFn<any, Options>;
+
+export const definePlugin: DefineGenericPluginFn = () => ({});
