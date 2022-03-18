@@ -1,6 +1,6 @@
 import { h as createElement, VNode } from 'vue';
 import { HoistFn } from './types';
-import { DefineComponent } from '@vue/runtime-core';
+import { Component, DefineComponent } from '@vue/runtime-core';
 
 /**
  * Render native element or Vue.js component
@@ -8,7 +8,7 @@ import { DefineComponent } from '@vue/runtime-core';
  * @example h('p', { class: 'paragraph' }, 'Hello world!')
  * @example h(Component, { color: 'primary' }, { default: () => 'Hello world!' })
  */
-export const h: HoistFn<VNode, DefineComponent<any>> = (
+export const h: HoistFn<VNode, Component | DefineComponent<any>> = (
     type,
     props?,
     ...children
