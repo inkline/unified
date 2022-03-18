@@ -49,12 +49,24 @@
 
 ## Setup
 
-Set an alias in your build system to resolve `@inkline/paper` to either `@inkline/paper/vue` or `@inkline/paper/react`. 
+1. Set an alias in your build system to resolve `@inkline/paper` to either `@inkline/paper/vue` or `@inkline/paper/react`. 
 
 - `@inkline/paper` => `@inkline/paper/vue`
 - `@inkline/paper` => `@inkline/paper/react`
 
-Import the common component definition interface from `@inkline/paper` and decide whether you're creating a library for `vue` or `react` at build time.
+2. Import the common component definition interface from `@inkline/paper` and decide whether you're creating a library for `vue` or `react` at build time.
+
+3. Configure `tsconfig.json` to use the custom `h` and `Fragment` JSX Factory functions.
+
+~~~
+{
+    "compilerOptions": {
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment"
+    }
+}
+~~~
 
 ## Usage
 
@@ -75,6 +87,14 @@ const children = ['Hello world'];
 const node = h(type, props, children);
 ~~~
 
+It also serves as a JSX Factory.
+
+~~~tsx
+import { h } from '@inkline/paper';
+
+const node = <div id="myid">Hello world!</div>
+~~~
+
 --------
 
 ### Define component
@@ -90,6 +110,16 @@ import { defineComponent, h } from '@inkline/paper';
 const Component = defineComponent({
     render () {
         return h('div');
+    }
+});
+~~~
+
+~~~tsx
+import { defineComponent, h } from '@inkline/paper';
+
+const Component = defineComponent({
+    render () {
+        return <div />;
     }
 });
 ~~~
@@ -118,9 +148,17 @@ import { defineComponent, h } from '@inkline/paper';
 
 const Component = defineComponent({
     render () {
-        return h('button', {}, [
-            'Hello world'
-        ]);
+        return h('button', {}, 'Hello world');
+    }
+});
+~~~
+
+~~~tsx
+import { defineComponent, h } from '@inkline/paper';
+
+const Component = defineComponent({
+    render () {
+        return <button>Hello world</button>;
     }
 });
 ~~~
@@ -157,6 +195,21 @@ const Component = defineComponent<{}, { text: string }>({
         return h('button', {}, [
             state.text
         ]);
+    }
+});
+~~~
+
+~~~tsx
+import { defineComponent, h } from '@inkline/paper';
+
+const Component = defineComponent<{}, { text: string }>({
+    setup () {
+        return {
+            text: "Hello world"
+        };
+    },
+    render (state) {
+        return <button>{state.text}</button>;
     }
 });
 ~~~
