@@ -13,7 +13,7 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
         emits: definition.emits || [],
         slots: definition.slots || [],
         props: definition.props || {},
-        setup (props, { slots, emit }: VueSetupContext) {
+        setup (props, { attrs, slots, emit }: VueSetupContext) {
             /**
              * Render slot
              *
@@ -43,9 +43,14 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
             /**
              * State and props
              */
-            const state = definition.setup
-                ? { ...props, ...definition.setup(props, setupContext) }
-                : props;
+            let state = {
+                ...attrs,
+                ...props
+            };
+
+            if (definition.setup) {
+                state = Object.assign(state, definition.setup(state, setupContext));
+            }
 
             /**
              * Render context
