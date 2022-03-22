@@ -28,14 +28,21 @@ export const h: HoistFn<VNode, FC<any>> = (
      *
      * @example h(Component, {}, { slotName: () => children });
      */
-    if (typeof type === 'function' && typeof children[0] === 'object' && !Array.isArray(children[0]) && !(children[0] as any).$$typeof) {
-        children = Object.entries(children[0] as Record<string, () => VNode>)
-            .map(([rawSlotName, childrenFn]) => {
-                const slotName = capitalizeFirst(rawSlotName);
-                const slotComponent = (type as FC<any> & { [key: string]: any })[slotName];
+    if (typeof type !== 'string' && typeof children[0] === 'object' && !Array.isArray(children[0]) && !(children[0] as any).$$typeof) {
+        const slots = children[0] as Record<string, () => VNode>;
+        const slotKeys = Object.keys(slots);
 
-                return h(slotComponent, { key: slotName }, childrenFn());
-            });
+        if (slotKeys.length === 1 && slotKeys[0] === 'default') {
+            children = [slots.default()].flat();
+        } else {
+            children = slotKeys
+                .map((slotKey) => {
+                    const slotName = capitalizeFirst(slotKey);
+                    const slotComponent = (type as FC<any> & { [key: string]: any })[slotName];
+
+                    return h(slotComponent, { key: slotName }, slots[slotKey]());
+                });
+        }
     }
 
     return createElement(type, props, ...children);
