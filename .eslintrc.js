@@ -28,11 +28,18 @@ module.exports = {
         'no-prototype-builtins': 'off',
         'max-params': 'off',
         'no-undef': 'off',
+        'no-unused-vars': 'off',
         'max-nested-callbacks': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+                varsIgnorePattern: '^(h|Fragment)$'
+            }
+        ]
     }
 };

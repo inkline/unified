@@ -14,6 +14,7 @@
     "postversion": "ts-node scripts/postversion.ts"
   },
   "devDependencies": {
+    "@types/node": "17.0.23",
     "@types/shelljs": "0.8.11",
     "@typescript-eslint/eslint-plugin": "5.13.0",
     "@typescript-eslint/parser": "5.13.0",

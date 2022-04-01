@@ -34,9 +34,19 @@ export interface HasSlotFn {
     (name?: string): boolean;
 }
 
+export interface ProvideFn<T = any> {
+    (identifier: string | symbol, value: T, dependencies?: any[]): void;
+}
+
+export interface InjectFn<T = any> {
+    (identifier: string | symbol, defaultValue?: T | (() => T)): T | undefined
+}
+
 export interface SetupContext {
     emit: EmitFn;
     hasSlot: HasSlotFn;
+    provide: ProvideFn;
+    inject: InjectFn;
 }
 
 export interface RenderContext {
@@ -64,6 +74,7 @@ export interface ComponentDefinition<
 export interface Providers {
     [key: string | symbol]: {
         state: any;
+        listeners: any[];
         setState(newValue: any): void;
         notify(newValue: any): void;
     };
@@ -103,14 +114,6 @@ export interface HoistFn<T = any, D = any, C = (string | number | boolean | T)> 
 
 export interface FragmentFn<C> {
     (props: { children?: C | C[] }): C | C[] | undefined;
-}
-
-export interface ProvideFn<T = any> {
-    (identifier: string | symbol, value: T, dependencies?: any[]): void;
-}
-
-export interface InjectFn<T = any> {
-    (identifier: string | symbol, defaultValue?: T | (() => T)): T | undefined
 }
 
 /**

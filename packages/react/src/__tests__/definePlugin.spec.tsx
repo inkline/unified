@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import { defineComponent, definePlugin, h, inject } from '../index';
+import { defineComponent, definePlugin, h } from '../index';
 
 describe('react', () => {
     describe('definePlugin()', () => {
@@ -41,7 +41,7 @@ describe('react', () => {
                 provide(provideSymbol, provideData);
             });
             const Component = defineComponent({
-                setup () {
+                setup (props, { inject }) {
                     const data = inject(provideSymbol);
 
                     return { data };

@@ -8,7 +8,7 @@ describe('react', () => {
             const identifier = Symbol('provide-reactive');
             const Provider = defineComponent({
                 setup (props, ctx) {
-                    provide(identifier, 'value');
+                    ctx.provide(identifier, 'value');
 
                     return {};
                 },
@@ -19,7 +19,7 @@ describe('react', () => {
 
             const Consumer = defineComponent({
                 setup (props, ctx) {
-                    const providedValue = inject(identifier);
+                    const providedValue = ctx.inject(identifier);
 
                     return { providedValue };
                 },
@@ -41,7 +41,7 @@ describe('react', () => {
                     const count = ref(0);
                     const onClick = () => { count.value += 1; };
 
-                    provide(identifier, count);
+                    ctx.provide(identifier, count, [count.value]);
 
                     return { onClick };
                 },
@@ -52,7 +52,7 @@ describe('react', () => {
 
             const Consumer = defineComponent({
                 setup (props, ctx) {
-                    const providedValue = inject(identifier);
+                    const providedValue = ctx.inject(identifier);
 
                     return { providedValue };
                 },
@@ -75,7 +75,7 @@ describe('react', () => {
                     const text = ref(props.id);
                     const onClick = () => { text.value = 'abc'; };
 
-                    provide(props.id, text);
+                    ctx.provide(props.id, text);
 
                     return { onClick };
                 },
@@ -86,7 +86,7 @@ describe('react', () => {
 
             const Consumer = defineComponent({
                 setup (props, ctx) {
-                    const providedValue = inject(props.id);
+                    const providedValue = ctx.inject(props.id);
 
                     return { providedValue };
                 },

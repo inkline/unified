@@ -15,10 +15,21 @@ const providers: Providers = {};
 export const registerProvider: RegisterProviderFn = (identifier, value) => {
     providers[identifier] = {
         state: value,
+        listeners: [],
         setState (newValue: any) {
             providers[identifier].state = newValue;
         },
-        notify () {}
+        notify (value) {
+            providers[identifier].listeners = providers[identifier].listeners.filter((fn) => {
+                try {
+                    fn(value);
+
+                    return true;
+                } catch (error) {
+                    return false;
+                }
+            });
+        }
     };
 };
 
@@ -67,7 +78,9 @@ export const inject: InjectFn = (identifier, defaultValue) => {
         registerProvider(identifier, defaultValue);
     }
 
-    providers[identifier].notify = setState;
+    if (!providers[identifier].listeners.includes(setState)) {
+        providers[identifier].listeners.push(setState);
+    }
 
     return providers[identifier].state;
 };
