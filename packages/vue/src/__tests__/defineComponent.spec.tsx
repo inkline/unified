@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/vue';
-import { defineComponent, h, ref, inject, provide, Events } from '../index';
+import { defineComponent, h, ref, Events } from '../index';
 
 describe('vue', () => {
     describe('defineComponent()', () => {
@@ -290,7 +290,7 @@ describe('vue', () => {
                     const identifier = Symbol('provide');
                     const Provider = defineComponent({
                         setup (props, ctx) {
-                            provide(identifier, 'value');
+                            ctx.provide(identifier, 'value');
 
                             return {};
                         },
@@ -301,7 +301,7 @@ describe('vue', () => {
 
                     const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject(identifier);
+                            const providedValue = ctx.inject(identifier);
 
                             return { providedValue };
                         },
@@ -325,7 +325,7 @@ describe('vue', () => {
                             const count = ref(0);
                             const onClick = () => { count.value += 1; };
 
-                            provide(identifier, count);
+                            ctx.provide(identifier, count);
 
                             return { onClick };
                         },
@@ -336,7 +336,7 @@ describe('vue', () => {
 
                     const Consumer = defineComponent({
                         setup (props, ctx) {
-                            const providedValue = inject(identifier);
+                            const providedValue = ctx.inject(identifier);
 
                             return { providedValue };
                         },
