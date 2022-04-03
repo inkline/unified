@@ -1,5 +1,5 @@
 import { DefineComponentFn, DefinePluginFn } from './types-common';
-import { Component, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 export * from './types-common';
 
@@ -17,4 +17,4 @@ export type DefineReactComponentFn<
     State = Record<string, any>
 > = DefineComponentFn<Props, State, VNode, FunctionComponent<Props> & { [key: string]: any; }>
 
-export type DefineReactPluginFn<Options = any> = DefinePluginFn<typeof Component, Options>;
+export type DefineReactPluginFn<Options = any> = DefinePluginFn<FunctionComponent<{ options?: Options, children: any }>, Options>;

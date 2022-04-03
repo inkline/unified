@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { defineComponent, definePlugin, h } from '../index';
+import {useEffect} from "react";
 
 describe('react', () => {
     describe('definePlugin()', () => {
@@ -39,6 +40,32 @@ describe('react', () => {
 
             const Plugin = definePlugin((options, { provide }) => {
                 provide(provideSymbol, provideData);
+            });
+            const Component = defineComponent({
+                setup (props, { inject }) {
+                    const data = inject(provideSymbol);
+
+                    return { data };
+                },
+                render ({ data }) {
+                    return <div>{data?.color}</div>;
+                }
+            });
+
+            const wrapper = render(<Plugin><Component /></Plugin>);
+            expect(wrapper.container.firstChild).toMatchSnapshot();
+        });
+
+        it('should provide reactive data to children', () => {
+            const provideSymbol = Symbol('provide');
+            const provideData = { color: 'light' };
+
+            const Plugin = definePlugin((options, { provide }) => {
+                provide(provideSymbol, provideData, [provideData]);
+
+                useEffect(() => {
+                    provideData.color = 'dark';
+                });
             });
             const Component = defineComponent({
                 setup (props, { inject }) {

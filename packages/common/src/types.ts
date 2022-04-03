@@ -16,10 +16,16 @@ export type ConstructorType =
     | ArrayConstructor;
 
 export type ComponentProps<Props> = {
-    [key in keyof Props]: ConstructorType | {
-        type?: ConstructorType;
-        default?: Props[key] | (() => Props[key]);
-    };
+    [key in keyof Props]:
+        | { type?: NumberConstructor, default?: number | (() => number) }
+        | { type?: StringConstructor, default?: string | (() => string) }
+        | { type?: BooleanConstructor, default?: boolean | (() => boolean) }
+        | { type?: ObjectConstructor, default?: object | (() => object) }
+        | { type?: ArrayConstructor, default?: unknown[] | (() => unknown[]) }
+}
+
+export type UnwrapProps<Props> = {
+    [key in keyof ComponentProps<Props>]: ComponentProps<Props>[key]['default'];
 }
 
 export interface EmitFn {

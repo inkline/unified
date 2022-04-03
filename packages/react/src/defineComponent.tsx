@@ -1,44 +1,34 @@
 import {
-    ComponentDefinition,
     ComponentProps,
     RenderContext,
     SetupContext,
     Slots,
-    VNode,
     EmitFn,
     HasSlotFn,
     SlotFn,
     ProvideFn,
-    InjectFn
+    InjectFn,
+    DefineReactComponentFn,
+    UnwrapProps
 } from './types';
-import {FC, PropsWithChildren, PureComponent, useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import { getSlotChildren, normalizeEventName, capitalizeFirst } from './helpers';
 import { PaperContext } from './context';
 import { h } from './h';
 
-abstract class PurePaperComponent<P> extends PureComponent<P> {
-    provides: Record<string | symbol, any> = {};
-}
-
-export type ReactFC<T> = FC<T & Record<string, any>>;
-export type PaperComponentConstructor = typeof PurePaperComponent & {
-    [key: string]: any;
-};
+export type ReactFC<T> = FC<T & Record<string, any>> & { [key: string]: any };
 
 /**
  * Define React component using Functional Component and named slots
  *
  * @param definition universal component definition
  */
-export function defineComponent<
-    Props = Record<string, any>,
-    State = Record<string, any>
-> (
-    definition: ComponentDefinition<PropsWithChildren<Props>, State, VNode>
-): PaperComponentConstructor {
+export const defineComponent: DefineReactComponentFn = (
+    definition
+) => {
     const slots: Slots = {};
 
-    const Component: ReactFC<Props> = function (props) {
+    const Component: ReactFC<UnwrapProps<typeof definition['props']>> = function (props) {
         /**
          * Render slot
          *
@@ -78,7 +68,10 @@ export function defineComponent<
          */
         const provide: ProvideFn = (identifier, value, dependencies?) => {
             useEffect(() => {
-                props.ctx.self.provides[identifier] = value;
+                props.ctx.setProvides({
+                    ...props.ctx.provides,
+                    [identifier]: value
+                });
             }, dependencies);
         };
 
@@ -90,7 +83,7 @@ export function defineComponent<
          */
         const inject: InjectFn = (identifier, defaultValue) => {
             defaultValue = typeof defaultValue === 'function'
-                ? (defaultValue as () => any)()
+                ? (defaultValue as () => typeof defaultValue)()
                 : defaultValue;
 
             let parent = props.ctx.parent;
@@ -99,11 +92,8 @@ export function defineComponent<
             }
 
             if (parent?.provides.hasOwnProperty(identifier)) {
-                console.log('inject', identifier, parent.provides[identifier])
                 return parent.provides[identifier];
             }
-
-            console.warn(`Could not find provider for "${identifier.toString()}"`);
 
             return defaultValue;
         };
@@ -123,7 +113,7 @@ export function defineComponent<
          */
         const state = definition.setup
             ? { ...props, ...definition.setup(props, setupContext) }
-            : props as Props & State;
+            : props;
 
         /**
          * Render context
@@ -144,7 +134,7 @@ export function defineComponent<
      */
     if (definition.props) {
         Component.defaultProps = Object.keys(definition.props)
-            .reduce((acc: Partial<Props>, propName) => {
+            .reduce((acc: Partial<UnwrapProps<typeof definition['props']>>, propName) => {
                 const propType = (definition.props as ComponentProps<any>)[propName];
 
                 if (typeof propType === 'object' && propType.default) {
@@ -160,29 +150,15 @@ export function defineComponent<
     /**
      * Inject / Provide HOC used to create a parent-child relationship between paper components
      */
-    const PaperComponent: PaperComponentConstructor = class extends PurePaperComponent<Props> {
-        provides: Record<string | symbol, any> = {};
-        render () {
-            return <PaperContext.Consumer>{(parent: any) =>
-                <PaperContext.Provider value={this}>
-                    <Component ctx={{ self: this, parent }} {...this.props} />
-                </PaperContext.Provider>
-            }</PaperContext.Consumer>;
-        }
-    };
+    const PaperComponent: ReactFC<UnwrapProps<typeof definition['props']>> = (props) => {
+        const [provides, setProvides] = useState({});
 
-    // const PaperComponent: any = (props: any) => {
-    //     const self = {
-    //         listeners: [],
-    //         provides: {}
-    //     };
-    //
-    //     return <PaperContext.Consumer>{(parent: any) =>
-    //         <PaperContext.Provider value={self}>
-    //             <Component ctx={{ self, parent }} {...props} />
-    //         </PaperContext.Provider>
-    //     }</PaperContext.Consumer>;
-    // };
+        return <PaperContext.Consumer>{(parent: any) =>
+            <PaperContext.Provider value={{ provides, setProvides, parent }}>
+                <Component ctx={{ provides, setProvides, parent }} {...props} />
+            </PaperContext.Provider>
+        }</PaperContext.Consumer>;
+    };
 
     /**
      * Slots
@@ -191,8 +167,8 @@ export function defineComponent<
         .forEach((name) => {
             slots[name] = () => null;
             slots[name].key = name;
-            PaperComponent[capitalizeFirst(name)] = slots[name]; // @TODO
+            PaperComponent[capitalizeFirst(name)] = slots[name];
         });
 
     return PaperComponent;
-}
+};

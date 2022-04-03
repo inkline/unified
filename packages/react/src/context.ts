@@ -1,3 +1,9 @@
-import { createContext } from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
 
-export const PaperContext = createContext<any>(null);
+interface PaperContextState {
+    provides: Record<string, any>;
+    setProvides: Dispatch<SetStateAction<Record<string, any>>>;
+    parent: PaperContextState;
+}
+
+export const PaperContext = createContext<PaperContextState | null>(null);

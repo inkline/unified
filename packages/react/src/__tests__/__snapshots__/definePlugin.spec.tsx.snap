@@ -11,3 +11,9 @@ exports[`react > definePlugin() > should provide data to children 1`] = `
   light
 </div>
 `;
+
+exports[`react > definePlugin() > should provide reactive data to children 1`] = `
+<div>
+  dark
+</div>
+`;
