@@ -2,10 +2,10 @@
   "name": "@inkline/paper-common",
   "description": "Inkline Paper Common package.",
   "scripts": {
-    "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
+    "build": "unbuild"
   },
   "devDependencies": {
-    "mjscjs": "1.0.9"
+    "unbuild": "0.7.2"
   },
   "repository": {
     "type": "git",

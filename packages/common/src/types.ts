@@ -25,7 +25,7 @@ export type ComponentProps<Props> = {
 }
 
 export type UnwrapProps<Props> = {
-    [key in keyof ComponentProps<Props>]: ComponentProps<Props>[key]['default'];
+    [key in keyof ComponentProps<Props>]: ComponentProps<Props>[key]['default'] | null;
 }
 
 export interface EmitFn {

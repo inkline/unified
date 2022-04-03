@@ -7,7 +7,7 @@
     "test": "vitest run",
     "test:dev": "vitest",
     "prebuild": "npm run pre",
-    "build": "tsc -d -p tsconfig.mjs.json && tsc -d -p tsconfig.cjs.json && mjscjs -p tsconfig.mjs.json && mjscjs -p tsconfig.cjs.json"
+    "build": "unbuild"
   },
   "devDependencies": {
     "@testing-library/react": "12.1.3",

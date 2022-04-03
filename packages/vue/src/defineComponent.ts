@@ -1,5 +1,7 @@
 import { SetupContext as VueSetupContext } from 'vue';
 import { SetupContext, RenderContext, DefineVueComponentFn, SlotFn, HasSlotFn } from './types';
+import { provide as nativeProvide, inject as nativeInject } from 'vue';
+import { InjectFn, ProvideFn } from './types';
 
 /**
  * Define Vue component using Composition API and setup()
@@ -33,10 +35,28 @@ export const defineComponent: DefineVueComponentFn = (definition) => {
             };
 
             /**
+             * Wrapper for native Vue provide function
+             *
+             * @param identifier
+             * @param value
+             */
+            const provide: ProvideFn = (identifier, value) => nativeProvide(identifier, value);
+
+            /**
+             * Wrapper for native Vue inject function
+             *
+             * @param identifier
+             * @param defaultValue
+             */
+            const inject: InjectFn = (identifier, defaultValue?) => nativeInject(identifier, defaultValue);
+
+            /**
              * Setup context
              */
             const setupContext: SetupContext = {
                 emit,
+                provide,
+                inject,
                 hasSlot
             };
 

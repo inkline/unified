@@ -12,17 +12,16 @@ shell.cd(resolve(__dirname, '..'));
  */
 
 shell.mkdir('lib');
-shell.cp('-r', 'packages/common/lib/cjs/*', 'lib');
-shell.cp('-r', 'packages/common/lib/mjs/*', 'lib');
+shell.cp('-r', 'packages/common/dist/*', 'lib');
+shell.rm('-r', 'packages/common/dist');
 
 [
     'react',
     'vue'
 ].forEach((packageName) => {
     shell.mkdir(`lib/${packageName}`);
-    shell.cp('-r', `packages/${packageName}/lib/cjs/*`, `lib/${packageName}`);
-    shell.cp('-r', `packages/${packageName}/lib/mjs/*`, `lib/${packageName}`);
-    shell.rm('-r', `packages/${packageName}/lib`);
+    shell.cp('-r', `packages/${packageName}/dist/*`, `lib/${packageName}`);
+    shell.rm('-r', `packages/${packageName}/dist`);
 });
 
 shell.rm('-r', 'lib/**/__tests__');
