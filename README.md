@@ -1,10 +1,10 @@
 <p align="center">
     <a href="http://inkline.io/">
-        <img src="https://raw.githubusercontent.com/inkline/inkline.io/main/src/assets/images/logo/logo-black.svg" alt="Inkline logo" width=72 height=72>
+        <img src="https://raw.githubusercontent.com/inkline/inkline.io/main/assets/images/logo/logo-black.svg" alt="Inkline logo" width=72 height=72>
     </a>
 </p>
 
-<h1 align="center">Inkline - Paper</h1>
+<h1 align="center">Inkline - Unified</h1>
 
 <p align="center">
     Unified interface for defining components for Vue and React using a single code base.<br/><br/> Inkline is written and maintained by <a href="https://github.com/alexgrozav">@alexgrozav</a>. 
